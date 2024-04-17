@@ -16,4 +16,7 @@ def getFilesPath():
     image_files = [os.path.join(DATASET_FOLDER, im) for im in image_files]
     return image_files
 
+def generateDatset():
+    pass
+    
 image_files = getFilesPath()
