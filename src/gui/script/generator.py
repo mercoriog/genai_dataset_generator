@@ -45,7 +45,7 @@ def extractCaptions(file):
     return "caption"
 
 def createTxtFile(filename, token, captions):
-    # disk folder path
+    # data folder from disk folder path
     data_path = getDataDiskPath()
     txt_file_path = f"{data_path}\\{filename}.txt"
     
