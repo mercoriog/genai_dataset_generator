@@ -1,4 +1,5 @@
 import gradio as gr
+import shutil
 from .script import generator as gen
 
 def compgetPresentation():
@@ -73,10 +74,11 @@ def compgetDownloadButton():
 
 # generator request function:
 def genRequest(folder, height, width, token):
-	print(type(folder))
-	archive = gen.generateDataset(folder, (width, height), token)
-	#TODO: Obtain archive
-	return archive
+	archive_data = gen.generateDataset(folder, (width, height), token)
+	data_path = gen.getDataDiskPath()
+	archive_path = f"{gen.getDiskPath()}\\dataset"
+	shutil.make_archive(archive_path, 'zip', data_path)
+	return f"{archive_path}.zip"
 
 # GUI Builder method:
 def buildGUI():
