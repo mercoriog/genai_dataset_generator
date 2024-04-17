@@ -1,18 +1,20 @@
-from PIL import Image as image
+from PIL import Image
 import os
+import numpy as np
 
-TRAINING_RESOLUTION = (512, 512)
+def renameImages(folder, token):
+    return folder
 
-def resizeImages(dataset):
-    dataset["pixel_values"] = [image.convert("RGB").resize(TRAINING_RESOLUTION) for image in dataset["image"]]
-    return dataset
+def imageCaptioning(folder, token):
+    return folder
 
-def getFilesPath(folder):
-    files = os.listdir(folder)
-    # filtro le immagini 
-    image_files = [f for f in files if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
-    image_files = [os.path.join(folder, im) for im in image_files]
-    return image_files
+def resizeImages(folder, size):
+    folder = [np.array(Image(f)) for f in folder]
+    #folder = [im.convert("RGB").resize(size) for im in folder]
+    return folder
 
-def generateDatset():
-    pass
+def generateDataset(folder, size, token):
+    folder = renameImages(folder, token)
+    folder = imageCaptioning(folder, token)
+    folder = resizeImages(folder, size)
+    return folder
