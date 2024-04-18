@@ -2,15 +2,44 @@ from PIL import Image
 from pathlib import Path
 import os
 import cv2
+import shutil
 import numpy as np
 
-def getDiskPath():
-    # disk folder path
-    return f"{os.getcwd()}\\genai_dataset_generator\\disk"
+def getLocalDataPath():
+    # local folder path
+    return f"{os.getcwd()}\\genai_dataset_generator\\local"
 
-def getDataDiskPath():
-    # data from disk path
-    return f"{getDiskPath()}\\data"
+def getUserDataPath():
+    # user folder path from local folder
+    return f"{getLocalDataPath()}\\user" 
+
+def getOutputDataPath():
+    # output data folder from local folder
+    return f"{getLocalDataPath()}\\out"
+
+def extractBasename(filename):
+    path_to, basename = os.path.split(filename)
+    return basename
+
+def extractNameNoExt(filename):
+    return Path(filename).stem
+
+def getLocalFilename(filename):
+    user_folder = getUserDataPath()
+    basename = extractBasename(filename)
+    return f"{user_folder}\\{basename}"
+
+def copyFolder(folder):
+    local_folder = []
+    for file in folder:
+        local_filename = getLocalFilename(file)
+        # load image as array
+        img = cv2.imread(file)
+        # save current file's local copy
+        cv2.imwrite(local_filename, img)
+        # add to local folder list
+        local_folder.append(local_filename)
+    return local_folder
 
 def findPadding(dim):
     if dim < 100:
@@ -32,21 +61,19 @@ def renameImages(folder, token):
     for file in folder:
         count += 1
         padded_str = getPaddedString(padding, count)
-        data_path = getDataDiskPath()
+        data_path = getOutputDataPath()
         new_filename = f"{data_path}\\{token}-{padded_str}.png"
         os.rename(file, new_filename)
         renamed_folder.append(new_filename)
     return renamed_folder
 
-def extractName(filename):
-    return Path(filename).stem
-
 def extractCaptions(file):
+    # TODO:
     return "caption"
 
 def createTxtFile(filename, token, captions):
     # data folder from disk folder path
-    data_path = getDataDiskPath()
+    data_path = getOutputDataPath()
     txt_file_path = f"{data_path}\\{filename}.txt"
     
     # create new .txt file
@@ -59,7 +86,7 @@ def createTxtFile(filename, token, captions):
 def imageCaptioning(folder, token):
     txt_folder = []
     for file in folder:
-        filename = extractName(file)
+        filename = extractNameNoExt(file)
         captions = extractCaptions(file)
         txt_file_path = createTxtFile(filename, token, captions)
         txt_folder.append(txt_file_path)
@@ -68,10 +95,9 @@ def imageCaptioning(folder, token):
 def resizeImages(folder, size):
     resized_folder = []
     for file in folder:
-        # load image as greyscale array
-        grey_img = cv2.imread(file)
-        # convert to rgb
-        img = cv2.cvtColor(grey_img, cv2.COLOR_BGR2RGB)
+        # load image as array
+        img = cv2.imread(file)
+        # do resize operation
         img = cv2.resize(img, size)
         # save resized image
         cv2.imwrite(file, img)
@@ -85,6 +111,9 @@ def combineFolders(folder_1, folder_2):
     return combined_folder
 
 def generateDataset(folder, size, token):
+    # copy the uploaded folder in local system folder
+    # local_folder = copyFolder(folder) 
+    
     # both txt-file-generation and resizing refers to this virtual folder 
     renamed_folder = renameImages(folder, token)
 

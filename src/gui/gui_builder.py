@@ -75,8 +75,8 @@ def compgetDownloadButton():
 # generator request function:
 def genRequest(folder, height, width, token):
 	archive_data = gen.generateDataset(folder, (width, height), token)
-	data_path = gen.getDataDiskPath()
-	archive_path = f"{gen.getDiskPath()}\\dataset"
+	data_path = gen.getOutputDataPath()
+	archive_path = f"{gen.getLocalDataPath()}\\dataset"
 	shutil.make_archive(archive_path, 'zip', data_path)
 	return f"{archive_path}.zip"
 
