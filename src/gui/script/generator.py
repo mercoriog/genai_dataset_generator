@@ -69,7 +69,7 @@ def renameImages(folder, token):
 
 def extractCaptions(file):
     # TODO:
-    return "caption"
+    return "jacket, Giorgio Armani"
 
 def createTxtFile(filename, token, captions):
     # data folder from disk folder path
