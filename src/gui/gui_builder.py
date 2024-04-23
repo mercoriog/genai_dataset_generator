@@ -74,11 +74,17 @@ def compgetDownloadButton():
 
 # generator request function:
 def genRequest(folder, height, width, token):
-	archive_data = gen.generateDataset(folder, (width, height), token)
-	data_path = gen.getOutputDataPath()
-	archive_path = f"{gen.getLocalDataPath()}\\dataset"
-	shutil.make_archive(archive_path, 'zip', data_path)
-	return f"{archive_path}.zip"
+	# calling the generateDataset function that bring a list of file path as 'folder' param [type: list], /
+	# a 'size' param [type: couple] to resize files,
+	# a 'token' param [type: string] for renaming the 'folder' files.
+	# It returns an archive file path
+	archive_file_path = gen.generateDataset(folder, (width, height), token)
+	
+	if archive_data != None:
+		return archive_file_path
+	else:
+		# TODO: Error modal
+		return ""
 
 # GUI Builder method:
 def buildGUI():
@@ -108,6 +114,10 @@ def buildGUI():
 			outputs = [download_button],
 			scroll_to_output = True,
 			show_progress = 'full'
+		)
+
+		download_button.click(
+			fn = downFileRequest
 		)
 
 		return demo
