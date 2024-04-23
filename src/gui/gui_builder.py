@@ -56,6 +56,26 @@ def compgetWidthInput():
     )
     return width_input
 
+def compgetCustomImageCaption():
+	customCaption_textbox = gr.Textbox(
+		lines = 2,
+        label = "Every image captions",
+        placeholder = "Type the caption to set to every image. Leave blank to not use.",
+        show_copy_button = True,
+        interactive = True
+	)
+	return customCaption_textbox
+
+def compgetAICaptioning():
+	aiCaptioning_checkbox = gr.Checkbox(
+		value = False,
+		label = "Use AI for Image Captioning",
+		info = "Set to use AI Model to automate image captioning.",
+		show_label = True,
+		interactive = True
+	)
+	return aiCaptioning_checkbox
+
 def compgetGenerateButton():
     generate_button = gr.Button(
         value = "Generate dataset",
@@ -78,13 +98,7 @@ def genRequest(folder, height, width, token):
 	# a 'size' param [type: couple] to resize files,
 	# a 'token' param [type: string] for renaming the 'folder' files.
 	# It returns an archive file path
-	archive_file_path = gen.generateDataset(folder, (width, height), token)
-	
-	if archive_data != None:
-		return archive_file_path
-	else:
-		# TODO: Error modal
-		return ""
+	return gen.generateDataset(folder, (width, height), token)
 
 # GUI Builder method:
 def buildGUI():
@@ -99,6 +113,12 @@ def buildGUI():
 			token_textbox = compgetTokenTextBox()
 		# [END] HORIZONTAL LAYOUT.		
 		
+		# [NEW] HORIZONTAL LAYOUT:
+		with gr.Row():
+			aiCaptioning_checkbox = compgetAICaptioning()
+			customCaption_textbox = compgetCustomImageCaption()
+		# [END] HORIZONTAL LAYOUT.
+
 		generate_button = compgetGenerateButton()
 		download_button = compgetDownloadButton()
 
@@ -114,10 +134,6 @@ def buildGUI():
 			outputs = [download_button],
 			scroll_to_output = True,
 			show_progress = 'full'
-		)
-
-		download_button.click(
-			fn = downFileRequest
 		)
 
 		return demo
