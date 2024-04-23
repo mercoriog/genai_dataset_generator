@@ -4,6 +4,7 @@ import os
 import cv2
 import shutil
 import numpy as np
+from .aicaptioning import image_captioning as aicapt
 
 MAIN_FOLDER_NAME = "genai_dataset_generator"
 LOCAL_FOLDER_NAME = "local"
@@ -87,54 +88,98 @@ def copyFolder(folder):
     return local_folder
 
 def findPadding(dim):
+    # return the number of digit for enumerate files, depending on files' number
     if dim < 100:
         return 3
     elif dim < 1000:
         return 4
     elif dim < 10000:
         return 5
-    else: return 6
+    elif dim < 100000:
+        return 6
+    else: return 7
 
 def getPaddedString(padding, num):
+    # calculate the number of '0' character to print for padding
     fill = padding - len(str(num))
+    # return a formatted string like '00x' or '0xx'
     return f"{'0' * fill}{str(num)}"
 
 def renameImages(folder, token):
+    # build a list for renamed files' path
     renamed_folder = []
+    # caluclate padding for formatting string like 'filename-00xx.ext'
     padding = findPadding(len(folder))
+    # pick a counter for enamurate
     count = 0
+    # get the output folder path where to store renamed folder
     out_folder_path = getOutputFolderPath()
+    # for each file in input folder list
     for file in folder:
+        # update counter
         count += 1
+        # get padded string to go from 'filename.ext' to 'filename-00xx.ext' 
         padded_str = getPaddedString(padding, count)
+        # build the formatted filename
         new_filename = f"{out_folder_path}\\{token}-{padded_str}.png"
+        # create a copy of current file reanamed as new formatted name
         shutil.copy(file, new_filename)
+        # add copied file in renamed folder list
         renamed_folder.append(new_filename)
+
+    # return a list of files path about copied and renamed version of folder list's files provided as input
     return renamed_folder
 
 def extractCaptions(file):
-    # TODO:
-    return "jacket, Giorgio Armani"
+    aicapt.load_model()
+    return "ai"
 
-def createTxtFile(filename, token, captions):
-    # output folder from disk folder path
+def createTxtFile(filename, token, user_captions, ai_generated_captions):
+    # get output folder from disk folder path
     out_folder_path = getOutputFolderPath()
+    # build the correct .txt file path
     txt_file_path = f"{out_folder_path}\\{filename}.txt"
     
     # create new .txt file
     txt_file = open(txt_file_path, "w")
-    txt_file.write(f'{token}, {captions}')
+    txt_file.write(f"{token}")
+    
+    # insert user captions if provided 
+    if len(user_captions) > 0:
+        txt_file.write(f", {user_captions}")
+    
+    # insert ai generated captions if provided
+    if len(ai_generated_captions) > 0:
+        txt_file.write(f", {ai_generated_captions}")
+    
     txt_file.close()
-
     return txt_file_path
 
-def imageCaptioning(folder, token):
+def imageCaptioning(folder, token, use_ai, user_captions):
+    # build a list that contains .txt files' path
     txt_folder = []
+    # for each file path in folder input, extract the absolute name (no extension)
+    # then extract captions from the image with ai if it is enabled
+    # then create the correspondent .txt file with same absolute name which contains
+    # the provided token as input, the provided captions as input and 
+    # (eventually) the captions provided by ai model 
     for file in folder:
+        # extract the absolute filename (no path, no extension)
         filename = extractNameNoExt(file)
-        captions = extractCaptions(file)
-        txt_file_path = createTxtFile(filename, token, captions)
+
+        ai_generated_captions = ""
+        # check if ai model's use is enabled
+        if use_ai == True:
+            # generate captions with ai model
+            ai_generated_captions = extractCaptions(file)
+        
+        # generate the .txt file with token and captions 
+        txt_file_path = createTxtFile(filename, token, user_captions, ai_generated_captions)
+
+        # add the .txt file path to folder list 
         txt_folder.append(txt_file_path)
+
+    # return a list of .txt file containing captions for each input folder's image
     return txt_folder
 
 def resizeImages(folder, size):
@@ -188,9 +233,9 @@ def createArchiveFile():
     # return the archive file path
     return archive_file_path
 
-def checkParams(folder, size, token):
+def checkParams(folder, size, token, use_ai, captions):
     # check the input params
-    if folder == None or size == None or token == None:
+    if folder == None or size == None or token == None or use_ai == None or captions == None:
         return False
 
     # check if input folder list is empty
@@ -201,9 +246,9 @@ def checkParams(folder, size, token):
     if token == "":
         return False
 
-def generateDataset(folder, size, token):
+def generateDataset(folder, size, token, use_ai, captions):
     # check the input params 
-    if checkParams(folder, size, token) == False:
+    if checkParams(folder, size, token, use_ai, captions) == False:
         # return readme file
         return getReadmeFile()
     
@@ -217,7 +262,7 @@ def generateDataset(folder, size, token):
     renamed_folder = renameImages(folder, token)
 
     # txt_folder will be one virtual folder apart
-    txt_folder = imageCaptioning(renamed_folder, token)
+    txt_folder = imageCaptioning(renamed_folder, token, use_ai, captions)
 
     # resized_folder will be one virtual folder apart
     resized_folder = resizeImages(renamed_folder, size)

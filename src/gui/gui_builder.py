@@ -59,7 +59,7 @@ def compgetWidthInput():
 def compgetCustomImageCaption():
 	customCaption_textbox = gr.Textbox(
 		lines = 2,
-        label = "Every image captions",
+        label = "Caption for every image",
         placeholder = "Type the caption to set to every image. Leave blank to not use.",
         show_copy_button = True,
         interactive = True
@@ -70,7 +70,7 @@ def compgetAICaptioning():
 	aiCaptioning_checkbox = gr.Checkbox(
 		value = False,
 		label = "Use AI for Image Captioning",
-		info = "Set to use AI Model to automate image captioning.",
+		info = "Activate to use AI Model to automate image captioning.",
 		show_label = True,
 		interactive = True
 	)
@@ -93,32 +93,46 @@ def compgetDownloadButton():
 	return download_button
 
 # generator request function:
-def genRequest(folder, height, width, token):
+def genRequest(folder, height, width, token, use_ai, captions):
 	# calling the generateDataset function that bring a list of file path as 'folder' param [type: list], /
 	# a 'size' param [type: couple] to resize files,
 	# a 'token' param [type: string] for renaming the 'folder' files.
 	# It returns an archive file path
-	return gen.generateDataset(folder, (width, height), token)
+	return gen.generateDataset(folder, (width, height), token, use_ai, captions)
 
 # GUI Builder method:
 def buildGUI():
 	with gr.Blocks(title = "Dataset generator") as demo:
 		presentation = compgetPresentation()
 		folder_uploader = compgetFolderUploader()
-		
-		# [NEW] HORIZONTAL LAYOUT:
-		with gr.Row():
-			width_input = compgetWidthInput()
-			height_input = compgetHeightInput()
-			token_textbox = compgetTokenTextBox()
-		# [END] HORIZONTAL LAYOUT.		
-		
-		# [NEW] HORIZONTAL LAYOUT:
-		with gr.Row():
-			aiCaptioning_checkbox = compgetAICaptioning()
-			customCaption_textbox = compgetCustomImageCaption()
-		# [END] HORIZONTAL LAYOUT.
 
+		# [NEW] DYNAMIC SECTION:
+		with gr.Accordion("Resize images"):
+			# [NEW] HORIZONTAL LAYOUT:
+			with gr.Row():
+				width_input = compgetWidthInput()
+				height_input = compgetHeightInput()
+			# [END] HORIZONTAL LAYOUT.		
+		# [END] DYNAMIC SECTION.
+
+		token_textbox = compgetTokenTextBox()
+
+		# [NEW] DYNAMIC SECTION:
+		with gr.Accordion("Image Captioning"):
+			# [NEW] HORIZONTAL LAYOUT:
+			with gr.Row():
+				# [NEW] VERTICAL LAYOUT:
+				with gr.Column(scale = 1):
+					aiCaptioning_checkbox = compgetAICaptioning()
+				# [END] VERTICAL LAYOUT
+
+				# [NEW] VERTICAL LAYOUT:
+				with gr.Column(scale = 2):
+					customCaption_textbox = compgetCustomImageCaption()
+				# [END] VERTICAL LAYOUT.
+			# [END] HORIZONTAL LAYOUT.
+		# [END] DYNAMIC SECTION.		
+		
 		generate_button = compgetGenerateButton()
 		download_button = compgetDownloadButton()
 
@@ -129,7 +143,9 @@ def buildGUI():
 				folder_uploader, 
 				height_input, 
 				width_input, 
-				token_textbox
+				token_textbox,
+				aiCaptioning_checkbox,
+				customCaption_textbox
 			],
 			outputs = [download_button],
 			scroll_to_output = True,
