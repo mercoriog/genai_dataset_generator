@@ -4,7 +4,7 @@ import os
 import cv2
 import shutil
 import numpy as np
-from .aicaptioning import image_captioning as aicapt
+from aicaptioning import image_captioning as aicapt
 
 MAIN_FOLDER_NAME = "genai_dataset_generator"
 LOCAL_FOLDER_NAME = "local"
@@ -130,8 +130,8 @@ def renameImages(folder, token):
     # return a list of files path about copied and renamed version of folder list's files provided as input
     return renamed_folder
 
-def extractCaptions(file):
-    caption = aicapt.imageCaptioningFromFile(file)
+def extractCaptions(file, processor, model):
+    caption = aicapt.imageCaptioningFromFile(file, processor, model)
     return caption
 
 def createTxtFile(filename, token, user_captions, ai_generated_captions):
@@ -158,6 +158,10 @@ def createTxtFile(filename, token, user_captions, ai_generated_captions):
 def imageCaptioning(folder, token, use_ai, user_captions):
     # build a list that contains .txt files' path
     txt_folder = []
+    # if use_ai is set True, then it is required to load the ai model before use it
+    if use_ai == True:
+        # gets the setup object fro use ai
+        processor, model = aicapt.setup()
     # for each file path in folder input, extract the absolute name (no extension)
     # then extract captions from the image with ai if it is enabled
     # then create the correspondent .txt file with same absolute name which contains
@@ -171,7 +175,7 @@ def imageCaptioning(folder, token, use_ai, user_captions):
         # check if ai model's use is enabled
         if use_ai == True:
             # generate captions with ai model
-            ai_generated_captions = extractCaptions(file)
+            ai_generated_captions = extractCaptions(file, processor, model)
         
         # generate the .txt file with token and captions 
         txt_file_path = createTxtFile(filename, token, user_captions, ai_generated_captions)

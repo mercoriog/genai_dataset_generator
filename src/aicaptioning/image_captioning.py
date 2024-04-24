@@ -1,39 +1,28 @@
-import requests
 from PIL import Image
-from transformers import BlipProcessor, TFBlipForConditionalGeneration
+import requests
+from transformers import BlipProcessor, BlipForConditionalGeneration
 
-def loadBlipProcessorAndModel():
+MODEL_PATH = ".\\genai_dataset_generator\\src\\aicaptioning\\large_model" 
+
+def setup():
 	# with transformers, processor and model are downloaded automatically
-	processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-large")
-	model = TFBlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
-	# return the Blip processor and the Blip Model
-	return processor, model
+	processor = BlipProcessor.from_pretrained(MODEL_PATH)
+	model = BlipForConditionalGeneration.from_pretrained(MODEL_PATH)
 	
-def generateCaptions(image, processor, model): 
+	# return the Blip processor and the Blip Model couple
+	return processor, model
+
+def imageCaptioningFromFile(image, processor, model): 
 	# load the raw image as rgb
 	raw_image = Image.open(image).convert('RGB')
 	# process the image with Blip Processor
 	inputs = processor(raw_image, return_tensors="pt")
 	# use Blip Model to generate an encoded output
-	out = model.generate(inputs)
+	out = model.generate(**inputs, max_new_tokens=1000)
 	# decode the output to reveal the image captions 
 	generated_caption = processor.decode(out[0], skip_special_tokens=True)
 	# return the image captioning result
 	return generated_caption
-
-def imageCaptioningFromFile(file):
-	try:
-		# load BlipProcessor and BlipModel
-		processor, model = loadBlipProcessorAndModel()
-		# generate captions from image using the provided processor and model
-		image_caption = generateCaptions(file, processor, model)
-	except Exception as e: 
-		# print the exception
-		print("[ERROR] " + str(e))
-		# if something wrong in image processing, don't provide a caption
-		image_caption = ""
-	# return the generated image caption
-	return image_caption
 
 def imageCaptioningFromFolder(folder):
 	try:
