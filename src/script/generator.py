@@ -131,8 +131,8 @@ def renameImages(folder, token):
     return renamed_folder
 
 def extractCaptions(file):
-    aicapt.load_model()
-    return "ai"
+    caption = aicapt.imageCaptioningFromFile(file)
+    return caption
 
 def createTxtFile(filename, token, user_captions, ai_generated_captions):
     # get output folder from disk folder path

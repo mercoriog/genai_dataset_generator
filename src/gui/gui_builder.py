@@ -107,7 +107,7 @@ def buildGUI():
 		folder_uploader = compgetFolderUploader()
 
 		# [NEW] DYNAMIC SECTION:
-		with gr.Accordion("Resize images"):
+		with gr.Accordion(label = "Resize images", open = False):
 			# [NEW] HORIZONTAL LAYOUT:
 			with gr.Row():
 				width_input = compgetWidthInput()
@@ -118,7 +118,7 @@ def buildGUI():
 		token_textbox = compgetTokenTextBox()
 
 		# [NEW] DYNAMIC SECTION:
-		with gr.Accordion("Image Captioning"):
+		with gr.Accordion(label = "Image Captioning", open = False):
 			# [NEW] HORIZONTAL LAYOUT:
 			with gr.Row():
 				# [NEW] VERTICAL LAYOUT:
