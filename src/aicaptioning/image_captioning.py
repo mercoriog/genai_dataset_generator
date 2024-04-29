@@ -12,6 +12,7 @@ def setup():
 	# return the Blip processor and the Blip Model couple
 	return processor, model
 
+
 def imageCaptioningFromFile(image, processor, model): 
 	# load the raw image as rgb
 	raw_image = Image.open(image).convert('RGB')
@@ -43,3 +44,8 @@ def imageCaptioningFromFolder(folder):
 		image_caption_list = ["" for file in folder]
 	# return a list of image caption, one for each input folder's image
 	return image_caption_list
+	
+def extractCaptionFromImage(image):
+	processor, model = setup()
+	generated_caption = imageCaptioningFromFile(image, processor, model)
+	return generated_caption
