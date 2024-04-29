@@ -1,5 +1,6 @@
 from aicaptioning import image_captioning as aicapt
-import folder_controller as foldc
+from script import folder_controller as foldc
+from pathlib import Path
 
 '''
 def extractCaptionWithAI(image, processor, model):
@@ -7,6 +8,9 @@ def extractCaptionWithAI(image, processor, model):
     caption = aicapt.imageCaptioningFromFile(image, processor, model)
     return caption
 '''
+
+def extractNameNoExt(filename):
+    return Path(filename).stem
 
 def createTxtFile(filename, token, ai_generated_caption, every_caption):
     # This function creates a text file named as input <filename>,

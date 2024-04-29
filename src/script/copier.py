@@ -1,4 +1,4 @@
-import folder_controller as foldc
+from script import folder_controller as foldc
 import shutil
 
 def copyFolder(folder):

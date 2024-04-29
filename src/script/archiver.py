@@ -1,5 +1,5 @@
 import shutil
-import folder_controller as foldc
+from script import folder_controller as foldc
 
 def generateArchiveFile(from_folder, to_folder):
     # This function generates an archive file from <from_folder> path 
@@ -25,7 +25,7 @@ def archiveProcessedData():
     # The generated archive file will be stored in 'local' folder.
 
     # Get 'output' folder path.
-    out_folder_path = foldc.getOutputFolderPath()
+    output_folder_path = foldc.getOutputFolderPath()
 
     # Get 'local' folder path.
     local_folder_path = foldc.getLocalFolderPath()

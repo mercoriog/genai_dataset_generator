@@ -1,4 +1,3 @@
-from pathlib import Path
 import os
 
 MAIN_FOLDER_NAME = "genai_dataset_generator"
@@ -11,9 +10,6 @@ GITHUB_REPOSITORY_LINK = "https://github.com/mercoriog/genai_dataset_generator"
 def extractBasename(filename):
     path_to, basename = os.path.split(filename)
     return basename
-
-def extractNameNoExt(filename):
-    return Path(filename).stem
 
 def getLocalFilename(filename):
     user_folder = getUserFolderPath()

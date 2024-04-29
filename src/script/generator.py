@@ -1,11 +1,10 @@
-import copier
-import renamer
-import resizer
-import captioner
-import combiner
-import archiver
-import preprocesser as prep
-import error_handler as hand
+from script import copier
+from script import renamer
+from script import resizer
+from script import captioner
+from script import archiver
+from script import preprocesser as prep
+from script import error_handler as hand
 
 def generateDataset(folder, size, token, use_ai, every_caption):
     # This function gets as input parameters:
@@ -13,14 +12,14 @@ def generateDataset(folder, size, token, use_ai, every_caption):
     # - size: a couple made of 'height' and 'width' values for resize operation;
     # - token: a string formatted as keyword used for renaming and captioning operations;
     # - use_ai: a boolean value that define if the use of AI is allowed or not;
-    # - every_captions: a string that will be written in each captioning text file produced by captioning operation.
+    # - every_caption: a string that will be written in each captioning text file produced by captioning operation.
 
     # This function returns a file path:
     # - the filepath to return as correct result of operations is an archive file;
     # - the filepath to return as errors occurred is the readme file of the project.  
     
     # Check the input parameters.
-    issues = prep.checkParams(folder, size, token, use_ai, captions)
+    issues = prep.checkParams(folder, size, token, use_ai, every_caption)
     
     # If there are issues with input parameters:
     if issues:
@@ -31,7 +30,7 @@ def generateDataset(folder, size, token, use_ai, every_caption):
     init = prep.initialize()
 
     # If there are issues with initialization:
-    if !init:
+    if not init:
         # Return readme file path.
         hand.returnReadmeFile()
 
@@ -53,7 +52,7 @@ def generateDataset(folder, size, token, use_ai, every_caption):
         # - the other captions can be passed as input and they will be part of every text file produced;
         # Get a list of produced files' path.
         # <txt_folder> represents a virtual folder.
-        txt_folder = captioner.imageCaptioning(renamed_folder, token, use_ai, every_captions)
+        txt_folder = captioner.imageCaptioning(renamed_folder, token, use_ai, every_caption)
 
         # Resize the renamed files
         # and get a list of resized files' path.
@@ -71,6 +70,9 @@ def generateDataset(folder, size, token, use_ai, every_caption):
         return archive_file
 
     # An error occurs during generation's operations:
-    except:
+    except Exception as e: 
+        # Print the exception.
+        print("[ERROR] " + str(e))
+
         # Return readme file path.
         return hand.returnReadmeFile()

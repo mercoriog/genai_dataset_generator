@@ -1,24 +1,30 @@
 import cv2
 
 def resizeImages(folder, size):
-    # build a resized folder list to access every resized file path
+    # This function gets as input parameters:
+    # - folder: a list of images' path;
+    # - size: a couple made 'height' and 'width' values.
+    
+    # This function returns a list of resized images' path.
+    
+    # Build a resized folder list.
     resized_folder_list = []
 
-    # for each file in the input folder 
+    # For each file in the input folder: 
     for file in folder:
-        # load image as array
-        img = cv2.imread(file)
+        # Load image as array.
+        image = cv2.imread(file)
         
-        # if size is (0,0) don't resize
+        # If size is (0,0) don't resize.
         if size != (0,0):
-            # resize the image
-            img = cv2.resize(img, size)
+            # Resize the image.
+            image = cv2.resize(image, size)
 
-        # save resized image
-        cv2.imwrite(file, img)
+        # Save the resized image with same original name.
+        cv2.imwrite(file, image)
 
-        # add the file path in resized folder list
+        # Add the file path in resizedfolder list.
         resized_folder_list.append(file)
     
-    # return a list of resized files' path
+    # Return a list of resized files' path.
     return resized_folder_list

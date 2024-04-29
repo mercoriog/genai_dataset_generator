@@ -1,12 +1,12 @@
 import shutil
-import folder_controller as foldc
+from script import folder_controller as foldc
 
-def checkParams(folder, size, token, use_ai, every_captions):
+def checkParams(folder, size, token, use_ai, every_caption):
     # This function is a parameters checker for 'script.generator' module.
     # This function returns True if none of the following conditions is satisfied.
 
     # Check the None value for each input parameter.
-    if folder == None or size == None or token == None or use_ai == None or every_captions == None:
+    if folder == None or size == None or token == None or use_ai == None or every_caption == None:
         return False
 
     # Check if <folder> list is empty.
