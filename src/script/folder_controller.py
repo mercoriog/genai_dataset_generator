@@ -4,28 +4,83 @@ MAIN_FOLDER_NAME = "genai_dataset_generator"
 LOCAL_FOLDER_NAME = "local"
 USER_FOLDER_NAME = "user"
 OUTPUT_FOLDER_NAME = "output"
+MODEL_FOLDER_NAME = "base_model"
+SOURCE_FOLDER_NAME = "src"
+AICAPTIONING_FOLDER_NAME = "aicaptioning"
 README_FILE_NAME = "README.txt"
 GITHUB_REPOSITORY_LINK = "https://github.com/mercoriog/genai_dataset_generator"
+MODEL_URL = r"https://drive.google.com/file/d/1jtMA62FBTn9X86gAl-dtTg81NckAk8A7/view?usp=sharing"
+ZIP_MODEL_NAME = "BlipBaseModel.zip"
 
 def extractBasename(filename):
     path_to, basename = os.path.split(filename)
     return basename
 
+def getModelURL():
+    # Return AI Model URL string.
+    return MODEL_URL
+
+def getSourceFolderPath():    
+    # Build 'src' folder path.
+    src_folder_path = os.path.join(os.getcwd(), MAIN_FOLDER_NAME, SOURCE_FOLDER_NAME)
+
+    # Return 'src' folder path.
+    return src_folder_path
+
+def getAiCaptioningFolderPath():
+    # Get 'src' folder path.
+    src_folder_path = getSourceFolderPath()
+
+    # Build 'aicaptioning' folder path.
+    aicapt_folder_path = os.path.join(src_folder_path, AICAPTIONING_FOLDER_NAME)
+
+    # Return 'aicaptioning' folder path.
+    return aicapt_folder_path
+
+def getModelFolderPath():
+    # Get 'aicaptioning' folder path.
+    aicapt_folder_path = getAiCaptioningFolderPath()
+
+    # Build Model folder path.
+    model_folder_path = os.path.join(aicapt_folder_path, MODEL_FOLDER_NAME)
+
+    # Check if Model folder exists:
+    if os.path.exists(model_folder_path) == False:
+        # Create Model folder:
+        os.mkdir(model_folder_path)
+
+    # Return Model folder path.
+    return model_folder_path
+
+def getZIPModelPath():
+    # Get Model folder path.
+    model_folder_path = getModelFolderPath()
+
+    # Build ZIP Model file path.
+    zip_model_path = os.path.join(model_folder_path, ZIP_MODEL_NAME)
+
+    # Return ZIP Model file path.
+    return zip_model_path
+
+def getLocalFolderPath():
+    # Build 'local' folder path.
+    local_folder_path = os.path.join(os.getcwd(), MAIN_FOLDER_NAME, LOCAL_FOLDER_NAME)
+    
+    # Check if 'local' folder exists:
+    if os.path.exists(local_folder_path) == False:
+        # Create 'local' folder:
+        os.mkdir(local_folder_path)
+
+    # Return 'local' folder path.
+    return local_folder_path
+
+
+
+
 def getLocalFilename(filename):
     user_folder = getUserFolderPath()
     basename = extractBasename(filename)
     return f"{user_folder}\\{basename}"
-
-def getLocalFolderPath():
-    # build the local folder path where to store data
-    local_folder_path = f"{os.getcwd()}\\{MAIN_FOLDER_NAME}\\{LOCAL_FOLDER_NAME}"
-    
-    # check if folder exists
-    if os.path.exists(local_folder_path) == False:
-        # if local folder don't exists then create it
-        os.mkdir(local_folder_path)
-
-    return local_folder_path
 
 def getUserFolderPath():
     # build user folder path from local folder

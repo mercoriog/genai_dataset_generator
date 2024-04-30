@@ -16,35 +16,29 @@ def generateDataset(folder, size, token, use_ai, every_caption):
 
     # This function returns a file path:
     # - the filepath to return as correct result of operations is an archive file;
-    # - the filepath to return as errors occurred is the readme file of the project.  
+    # - the filepath to return as errors occurred is the readme file of the project. 
     
-    # Check the input parameters.
-    issues = prep.checkParams(folder, size, token, use_ai, every_caption)
-    
-    # If there are issues with input parameters:
-    if issues:
-        # Return readme file path.
-        hand.returnReadmeFile()
-        
+    # Check the input parameters.   
     # Initialize the operations' folders.
-    init = prep.initialize()
+    # Check AI Model if allowed.
+    init = prep.initGenerator(folder, size, token, use_ai, every_caption)
 
     # If there are issues with initialization:
     if not init:
         # Return readme file path.
-        hand.returnReadmeFile()
+        return hand.returnReadmeFile()
 
     # Set an exception handler for operations' errors:
     try:
         # Copy the uploaded folder in 'local' folder
         # and get a list of copied files' path.
         # <local_folder> represents a real folder.
-        # # # local_folder = copier.copyFolder(folder) 
+        local_folder = copier.copyFolder(folder)
         
         # Rename the files stored in 'local' folder 
         # and get a list of renamed files' path.
         # <renamed_folder> represents a virtual verion of the real 'local' folder.
-        renamed_folder = renamer.renameImages(folder, token)
+        renamed_folder = renamer.renameImages(local_folder, token)
 
         # Generate one text file for each image file, containing the image captions:
         # - the first caption to write is the token;
