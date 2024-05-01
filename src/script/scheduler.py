@@ -1,4 +1,5 @@
 from script import preprocesser as prep
+from gui import gui_builder as build
 
 def start():
 	# Initialize.
@@ -7,3 +8,9 @@ def start():
 	# Check if GUI is initialized:
 	if not init:
 		print("[ERROR] Initialization failed.")
+
+	# Build GUI.
+	demo = build.buildGUI()
+
+	# Start GUI.
+	demo.launch(share = False)
