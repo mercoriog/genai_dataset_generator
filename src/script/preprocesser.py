@@ -1,5 +1,5 @@
-from script import folder_controller as foldc
-from script import model_controller as modc
+from controller import folder_controller as foldc
+from controller import model_controller as modc
 import shutil
 import os
 
@@ -14,6 +14,9 @@ def initGUI():
     if model == True:
         # Notify initialization done.
         print("[PREP] GUI initialization done.")
+    else
+        # Notify initialization failure.
+        print("[ERROR] GUI initialization failed.")
 
 def checkParams(folder, size, token, use_ai, every_caption):
     # This function is a parameters checker for 'script.generator' module.

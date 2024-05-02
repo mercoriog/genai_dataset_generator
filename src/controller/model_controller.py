@@ -1,23 +1,9 @@
-from script import downloader as down
-from script import folder_controller as foldc
+from service import downloader as down
+from controller import folder_controller as foldc
 import os
 
-def checkModel():
-    # Get Model folder path.
-    model_folder_path = foldc.getModelFolderPath()
-
-    # List all Model folder file.
-    model_folder_files = os.listdir(model_folder_path)
-
-    # If Model folder is empty:
-    if len(model_folder_files) == 0:
-        # Return False
-        return False
-
-    # This function returns True if Model is not empty.
-    return True
-
 def loadModel():
+    # This function download the model from web and store it in Model folder.
     # Get path where to store the ZIP Model file.  
     zip_model_path = foldc.getZIPModelPath()
     
@@ -31,6 +17,24 @@ def loadModel():
     # This function returns True if Model is loaded.
     # If any error occurs, <model> value is False.
     return model
+
+def checkModel():
+    # This function checks if Model is ready to use.
+    # Model is expected to be downloaded and stored in Model folder.
+    
+    # Get Model folder path.
+    model_folder_path = foldc.getModelFolderPath()
+
+    # List all Model folder file.
+    model_folder_files = os.listdir(model_folder_path)
+
+    # If Model folder is empty:
+    if len(model_folder_files) == 0:
+        # Return False
+        return False
+
+    # This function returns True if Model is not empty.
+    return True
 
 def initModel():
     # Get Model folder path.

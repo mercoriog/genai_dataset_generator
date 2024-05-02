@@ -1,5 +1,5 @@
-from script import folder_controller as foldc
+from controller import manual_controller as manual
 
-def returnReadmeFile():
-	# Return readme file path.
-	return foldc.getReadmeFile()
+def returnManualFile():
+	# Return manual file path.
+	return manual.getManualFile()

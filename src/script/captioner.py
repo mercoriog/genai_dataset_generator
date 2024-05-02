@@ -1,5 +1,5 @@
 from aicaptioning import image_captioning as aicapt
-from script import folder_controller as foldc
+from controller import folder_controller as foldc
 from pathlib import Path
 
 '''

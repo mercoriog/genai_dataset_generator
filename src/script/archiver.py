@@ -1,5 +1,5 @@
 import shutil
-from script import folder_controller as foldc
+from controller import folder_controller as foldc
 
 def generateArchiveFile(from_folder, to_folder):
     # This function generates an archive file from <from_folder> path 

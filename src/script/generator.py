@@ -26,7 +26,7 @@ def generateDataset(folder, size, token, use_ai, every_caption):
     # If there are issues with initialization:
     if not init:
         # Return readme file path.
-        return hand.returnReadmeFile()
+        return hand.returnManualFile()
 
     # Set an exception handler for operations' errors:
     try:
@@ -69,4 +69,4 @@ def generateDataset(folder, size, token, use_ai, every_caption):
         print("[ERROR] " + str(e))
 
         # Return readme file path.
-        return hand.returnReadmeFile()
+        return hand.returnManualFile()

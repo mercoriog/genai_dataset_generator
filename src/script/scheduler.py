@@ -7,8 +7,9 @@ def start():
 
 	# Check if GUI is initialized:
 	if not init:
+		# Notify initialization failure.
 		print("[ERROR] Initialization failed.")
-
+	
 	# Build GUI.
 	demo = build.buildGUI()
 

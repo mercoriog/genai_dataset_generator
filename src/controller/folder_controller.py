@@ -7,7 +7,7 @@ OUTPUT_FOLDER_NAME = "output"
 MODEL_FOLDER_NAME = "base_model"
 SOURCE_FOLDER_NAME = "src"
 AICAPTIONING_FOLDER_NAME = "aicaptioning"
-README_FILE_NAME = "README.txt"
+MANUAL_FILE_NAME = "Manual.txt"
 GITHUB_REPOSITORY_LINK = "https://github.com/mercoriog/genai_dataset_generator"
 MODEL_URL = r"https://drive.google.com/file/d/1jtMA62FBTn9X86gAl-dtTg81NckAk8A7/view?usp=sharing"
 ZIP_MODEL_NAME = "BlipBaseModel.zip"
@@ -68,55 +68,64 @@ def getLocalFolderPath():
     
     # Check if 'local' folder exists:
     if os.path.exists(local_folder_path) == False:
-        # Create 'local' folder:
+        # Create 'local' folder.
         os.mkdir(local_folder_path)
 
     # Return 'local' folder path.
     return local_folder_path
 
-
-
-
-def getLocalFilename(filename):
-    user_folder = getUserFolderPath()
-    basename = extractBasename(filename)
-    return f"{user_folder}\\{basename}"
-
 def getUserFolderPath():
-    # build user folder path from local folder
-    user_folder_path = f"{getLocalFolderPath()}\\{USER_FOLDER_NAME}" 
+    # Get 'local' folder path.
+    local_folder_path = getLocalFolderPath()
     
-    # check if folder exists
+    # Build 'user' folder path from 'local' folder.
+    user_folder_path = os.path.join(local_folder_path, USER_FOLDER_NAME)
+    
+    # Check if 'user' folder exists:
     if os.path.exists(user_folder_path) == False:
-        # if user folder don't exists then create it
+        # Create 'user' folder.
         os.mkdir(user_folder_path)
 
+    # Return 'user' folder path.
     return user_folder_path
 
+def buildUserFolderFile(file_path):
+    # This function build a 'user' folder path from file.
+    # It extract the basename (name.ext) from input file path
+    # and concatenate it with 'user' folder path.
+
+    # Get user folder path.
+    user_folder_path = getUserFolderPath()
+    
+    # Get basename of input file path.
+    basename = extractBasename(file_path)
+    
+    # Build path with 'user' folder. 
+    user_folder_file_path = os.path.join(user_folder_path, basename)
+    
+    # Return file path in 'user' folder.
+    return user_folder_file_path
+
 def getOutputFolderPath():
-    # build output data folder from local folder
-    out_folder_path = f"{getLocalFolderPath()}\\{OUTPUT_FOLDER_NAME}"
+    # Get 'local' folder path.
+    local_folder_path = getLocalFolderPath()
+    
+    # Build 'output' folder path.
+    output_folder_path = os.path.join(local_folder_path, OUTPUT_FOLDER_NAME)
 
-    # check if folder exists
-    if os.path.exists(out_folder_path) == False:
-        # if out folder don't exists then create it
-        os.mkdir(out_folder_path)
+    # check if folder exists:
+    if os.path.exists(output_folder_path) == False:
+        # Create 'output' folder
+        os.mkdir(output_folder_path)
 
-    return out_folder_path
+    return output_folder_path
 
-def getReadmeFile():
-    # build readme filepath
-    readme_file_path = f"{MAIN_FOLDER_NAME}\\{README_FILE_NAME}"
+def getManualFilePath():
+    # Build manual file path.
+    manual_file_path = os.path.join(MAIN_FOLDER_NAME, MANUAL_FILE_NAME)
 
-    # check if file exists
-    if os.path.exists(readme_file_path) == False:
-        # if readme file don't exists then create it
-        with open(readme_file_path, 'r') as readme_file:
-            readme_file.write(
-                f"This file is created as original README.txt file is missing.\n \
-                Check out at {GITHUB_REPOSITORY_LINK}")
-
-    return readme_file_path
+    # Return manual file path.
+    return manual_file_path
 
 def initFolders():
     # Set an exception handler:

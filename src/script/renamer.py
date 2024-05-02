@@ -1,4 +1,4 @@
-from script import folder_controller as foldc
+from controller import folder_controller as foldc
 import shutil
 
 def findPadding(num):

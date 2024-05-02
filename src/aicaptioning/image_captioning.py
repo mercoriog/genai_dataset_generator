@@ -1,15 +1,21 @@
 from PIL import Image
 import requests
 from transformers import BlipProcessor, BlipForConditionalGeneration
-
-MODEL_PATH = ".\\genai_dataset_generator\\src\\aicaptioning\\large_model" 
+from controller import folder_controller as foldc
 
 def setup():
-	# This function load the pretrained Blip model and it's processor from MODEL_PATH.
-	processor = BlipProcessor.from_pretrained(MODEL_PATH)
-	model = BlipForConditionalGeneration.from_pretrained(MODEL_PATH)
+	# This function load the pretrained Blip model and it's processor from model folder.
 	
-	# return the BlipModel and BlipProcessor.
+	# Get model folder path.
+	model_path = foldc.getModelFolderPath()
+
+	# Load model.
+	model = BlipForConditionalGeneration.from_pretrained(model_path)
+
+	# Load processor.
+	processor = BlipProcessor.from_pretrained(model_path)
+	
+	# Return the BlipModel and BlipProcessor.
 	return model, processor
 
 def imageCaptioningFromFile(image, model, processor): 

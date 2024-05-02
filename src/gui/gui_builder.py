@@ -1,7 +1,5 @@
 import gradio as gr
-import shutil
 from script import generator as gen
-from aicaptioning import image_captioning as aicapt
 
 def compgetPresentation():
 	presentation = gr.Markdown('''
