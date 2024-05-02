@@ -1,7 +1,7 @@
 import os
 import shutil
 
-MAIN_FOLDER_NAME = "genai_dataset_generator"
+MAIN_FOLDER_NAME = "."
 LOCAL_FOLDER_NAME = "local"
 USER_FOLDER_NAME = "user"
 OUTPUT_FOLDER_NAME = "output"

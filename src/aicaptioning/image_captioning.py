@@ -1,5 +1,4 @@
 from PIL import Image
-import requests
 from transformers import BlipProcessor, BlipForConditionalGeneration
 from controller import folder_controller as foldc
 

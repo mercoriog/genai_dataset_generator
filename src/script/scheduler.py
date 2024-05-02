@@ -14,4 +14,4 @@ def start():
 	demo = build.buildGUI()
 
 	# Start GUI.
-	demo.launch(share = False)
+	demo.launch(allowed_paths=["local/"], share = False)
