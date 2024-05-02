@@ -1,5 +1,6 @@
 import gradio as gr
 from script import generator as gen
+from pathlib import Path
 
 def compgetPresentation():
 	presentation = gr.Markdown('''
@@ -22,12 +23,22 @@ def compgetFolderUploader():
 def compgetTokenTextBox():
     token_textbox = gr.Textbox(
         lines = 1,
-        label = "Token",
-        placeholder = "Type the token associate to the dataset's content. Use a keyword.",
+        label = "Set necessary token to perform dataset generation",
+        placeholder = "Use a keyword.",
         show_copy_button = True,
         interactive = True
     )
     return token_textbox
+
+def compgetLabelCheckBox():
+	label_checkbox = gr.Checkbox(
+		value = False,
+		label = "Enable Labelling",
+		info = "Set to generate a text file for each dataset image with token label. Check 'Image Captioning' section for more.",
+		show_label = True,
+		interactive = True
+	)
+	return label_checkbox
 
 def compgetHeightInput():
     height_input = gr.Number(
@@ -54,6 +65,15 @@ def compgetWidthInput():
         maximum = 1024
     )
     return width_input
+
+def compgetLabellingLabel():
+	labelling_label = gr.Label(
+		value = "Set this options only if 'Labelling' is enable.",
+		label = "*** READ BEFORE CONTINUING ***",
+		show_label = True,
+		color = 'red'
+	)
+	return labelling_label
 
 def compgetCustomImageCaption():
 	customCaption_textbox = gr.Textbox(
@@ -82,9 +102,17 @@ def compgetGenerateButton():
     )
     return generate_button
 
+def compgetDatasetFile():
+	datasetFile = gr.File(
+		label = "Generated dataset",
+		show_label = True,
+		interactive = False,
+	)
+	return datasetFile
+
 def compgetDownloadButton():
 	download_button = gr.DownloadButton(
-		label = "Download dataset folder",
+		label = "Download file",
 		variant = "secondary",
 		size = "lg", # or 'sm' or None
 		interactive = True,
@@ -92,12 +120,22 @@ def compgetDownloadButton():
 	return download_button
 
 # generator request function:
-def genRequest(folder, height, width, token, use_ai, captions):
-	# calling the generateDataset function that bring a list of file path as 'folder' param [type: list], /
-	# a 'size' param [type: couple] to resize files,
-	# a 'token' param [type: string] for renaming the 'folder' files.
-	# It returns an archive file path
-	return gen.generateDataset(folder, (width, height), token, use_ai, captions)
+def genRequest(folder, height, width, token, label, use_ai, every_caption):
+	# calling the generateDataset function that bring 
+	# a <folder> param [type: list] containing a list of file path;
+	# a <size> param [type: couple] to resize files;
+	# a <token> param [type: string] for renaming the 'folder' files;
+	# a <label> param [type: bool] to enable/disable text file generation for labelling;
+	# a <use_ai> param [type: bool] to enable/disable ai caption generation;
+	# a <every_caption> param [type: string] to insert the caption in each generated text file.
+	# It returns an archive file path.
+	generated_file = gen.generateDataset(folder, (width, height), token, label, use_ai, every_caption)
+
+	# Change generated file output name
+	output_file = Path(generated_file).name
+	
+	# Return two times to fill File component and Download button component.
+	return generated_file, output_file
 
 # GUI Builder method:
 def buildGUI():
@@ -116,26 +154,34 @@ def buildGUI():
 
 		token_textbox = compgetTokenTextBox()
 
-		# [NEW] DYNAMIC SECTION:
-		with gr.Accordion(label = "Image Captioning", open = False):
-			# [NEW] HORIZONTAL LAYOUT:
-			with gr.Row():
-				# [NEW] VERTICAL LAYOUT:
-				with gr.Column(scale = 1):
-					aiCaptioning_checkbox = compgetAICaptioning()
-				# [END] VERTICAL LAYOUT
+		# [NEW] GROUP LAYOUT:
+		with gr.Group():
+			label_checkbox = compgetLabelCheckBox()
 
-				# [NEW] VERTICAL LAYOUT:
-				with gr.Column(scale = 2):
-					customCaption_textbox = compgetCustomImageCaption()
-				# [END] VERTICAL LAYOUT.
-			# [END] HORIZONTAL LAYOUT.
-		# [END] DYNAMIC SECTION.		
-		
+			# [NEW] DYNAMIC SECTION:
+			with gr.Accordion(label = "Image Captioning.", open = False):
+				labelling_label = compgetLabellingLabel()
+				
+				# [NEW] HORIZONTAL LAYOUT:
+				with gr.Row():
+					# [NEW] VERTICAL LAYOUT:
+					with gr.Column(scale = 1):
+						aiCaptioning_checkbox = compgetAICaptioning()
+					# [END] VERTICAL LAYOUT
+
+					# [NEW] VERTICAL LAYOUT:
+					with gr.Column(scale = 2):
+						customCaption_textbox = compgetCustomImageCaption()
+					# [END] VERTICAL LAYOUT.
+				# [END] HORIZONTAL LAYOUT.
+			# [END] DYNAMIC SECTION.		
+		# [END] GROUP LAYOUT.
+
 		generate_button = compgetGenerateButton()
+		datasetFile = compgetDatasetFile()
 		download_button = compgetDownloadButton()
 
-		# define event listener
+		# Define event listener for generation.
 		generate_button.click(
 			fn = genRequest,
 			inputs = [
@@ -143,10 +189,11 @@ def buildGUI():
 				height_input, 
 				width_input, 
 				token_textbox,
+				label_checkbox,
 				aiCaptioning_checkbox,
 				customCaption_textbox
 			],
-			outputs = [download_button],
+			outputs = [datasetFile, download_button],
 			scroll_to_output = True,
 			show_progress = 'full'
 		)

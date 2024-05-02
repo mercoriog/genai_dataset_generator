@@ -1,6 +1,7 @@
 from aicaptioning import image_captioning as aicapt
 from controller import folder_controller as foldc
 from pathlib import Path
+import os
 
 '''
 def extractCaptionWithAI(image, processor, model):
@@ -23,8 +24,11 @@ def createTxtFile(filename, token, ai_generated_caption, every_caption):
     # Get 'output' folder's path.
     out_folder_path = foldc.getOutputFolderPath()
     
+    # Build file.txt basename.
+    txt_file_basename = f"{filename}.txt"
+
     # Build the .txt file path combining 'output' folder path with filename and .txt extension.
-    txt_file_path = f"{out_folder_path}\\{filename}.txt"
+    txt_file_path = os.path.join(out_folder_path, txt_file_basename)
     
     # Create new .txt file.
     txt_file = open(txt_file_path, "w")
@@ -63,13 +67,11 @@ def imageCaptioning(folder, token, use_ai, every_caption):
     
     # Initialize an empty AI generated caption string.
     ai_generated_caption = ""
-
-    '''
+    
     # If AI model usage is is enabled, then it is required to load the AI model before use it:
     if use_ai == True:
         # Get the setup objects for AI model usage.
-        processor, model = aicapt.setup()
-    '''
+        model, processor = aicapt.setup()    
 
     # For each image path in folder:
     for image in folder:
@@ -79,8 +81,7 @@ def imageCaptioning(folder, token, use_ai, every_caption):
         # Check if AI model usage is enabled:
         if use_ai == True:
             # Generate caption for the current image with AI model.
-            # # # ai_generated_caption = extractCaptionWithAI(image, processor, model)
-            ai_generated_caption = aicapt.extractCaptionFromImage(image)
+            ai_generated_caption = aicapt.extractCaptionFromImage(image, model, processor)
         
         # Generate the text file associated to current image. 
         txt_file_path = createTxtFile(filename, token, ai_generated_caption, every_caption)

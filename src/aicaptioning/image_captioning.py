@@ -37,10 +37,7 @@ def imageCaptioningFromFile(image, model, processor):
 	# Return the AI generated caption of the input image.
 	return decoded_caption
 
-def extractCaptionFromImage(image):
-	# Load BlipModel and BlipProcessor.
-	model, processor = setup()
-	
+def extractCaptionFromImage(image, model, processor):	
 	# Generate caption using BlipModel.
 	generated_caption = imageCaptioningFromFile(image, model, processor)
 	

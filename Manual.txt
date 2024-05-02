@@ -1,0 +1,8 @@
+If you see this file you are probabily using wrong Genai Dataset Generator app.
+Here are NECESSARY steps to follow for a correct use:
+1. Upload a folder only containing images.
+2. Insert a keyword token.
+3. If displayed, wait until file box's countdown ends
+
+If you follow this steps and Manual continues to be the generated dataset, there could be a problem with image captioning Model.
+If '[PREP]' log message display 'GUI Initialization done.', there are no errors related to Model and problems can be related to uploaded folder.

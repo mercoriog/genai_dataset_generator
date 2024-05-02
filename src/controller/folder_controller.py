@@ -1,4 +1,5 @@
 import os
+import shutil
 
 MAIN_FOLDER_NAME = "genai_dataset_generator"
 LOCAL_FOLDER_NAME = "local"

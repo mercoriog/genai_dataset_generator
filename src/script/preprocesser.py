@@ -14,16 +14,19 @@ def initGUI():
     if model == True:
         # Notify initialization done.
         print("[PREP] GUI initialization done.")
-    else
+    else:
         # Notify initialization failure.
         print("[ERROR] GUI initialization failed.")
 
-def checkParams(folder, size, token, use_ai, every_caption):
+    # Return True if no error occurs.
+    return model
+
+def checkParams(folder, size, token, label, use_ai, every_caption):
     # This function is a parameters checker for 'script.generator' module.
     # This function returns True if none of the following conditions is satisfied.
 
     # Check the None value for each input parameter.
-    if folder == None or size == None or token == None or use_ai == None or every_caption == None:
+    if folder == None or size == None or token == None or label == None or use_ai == None or every_caption == None:
         return False
 
     # Check if <folder> list is empty.
@@ -37,13 +40,13 @@ def checkParams(folder, size, token, use_ai, every_caption):
     # Return True as default value.
     return True
 
-def initGenerator(folder, size, token, use_ai, every_caption):
+def initGenerator(folder, size, token, label, use_ai, every_caption):
     # This function ensures that parameters of 'script.generator' modue are correctly loaded, 
     # ensures that operations' folders are ready to use
     # and, if allowed, it ensures that AI model is correctly loaded.
 
     # Call the parameters checker function.
-    params = checkParams(folder, size, token, use_ai, every_caption)
+    params = checkParams(folder, size, token, label, use_ai, every_caption)
     # If there are issues with paramteres, <params> is False:
     if not params:
         # Notify issues.
@@ -56,8 +59,8 @@ def initGenerator(folder, size, token, use_ai, every_caption):
         # Notify issues.
         return False
 
-    # Check if AI Model usage is allowed: 
-    if use_ai is True:
+    # Check if labelling is allowed and if AI Model usage is allowed: 
+    if label is True and use_ai is True:
         # Call the AI Model checker function.
         model = modc.checkModel()
         # If there are issues with AI Model, <model> is False:
