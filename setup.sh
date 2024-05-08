@@ -23,7 +23,7 @@ correct_python_version="3.9.18"
 # Check if python version is 3.9.18
 if [[ "$python_version" != *"$correct_python_version"* ]]; then
 	# Upgrade python to 3.9.18
-	sudo apt install --only-upgrade python3=="$correct_python_version"
+	sudo apt install --only-upgrade python3="$correct_python_version"
 else
 	echo "Correct python3 version installed. [Python3 $correct_python_version]"
 fi
