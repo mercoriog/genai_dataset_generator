@@ -35,7 +35,7 @@ if dpkg -s python3-venv &> /dev/null; then
     echo "venv found."
 else
     echo "venv non installed. Start installation..."
-    spip install --user virtualenv
+    pip install --user virtualenv
     echo "venv installation done."
 fi
 
@@ -48,23 +48,25 @@ desired_version="3.9.18"
 
 # Check if python version is 3.9.18
 if [[ "$python_version" != *"$desired_version"* ]]; then
+	echo "Python $desired_version required. Start installation..."
+	
 	# Install curl
 	sudo apt install curl
 
     # Install pyenv
     curl https://pyenv.run | bash
-    #export PATH="$HOME/.pyenv/bin:$PATH"
-    #eval "$(pyenv init --path)"
+    export PATH="$HOME/.pyenv/bin:$PATH"
+    eval "$(pyenv init --path)"
 
-    #pyenv install $desired_version
-    #pyenv global $desired_version
- 
+    pyenv install $desired_version
+    pyenv global $desired_version
+
 	# Install desired python version
-	pyenv install 3.9.18
+	# pyenv install 3.9.18
 	# Install pipenv
-	pip install pipenv
+	# pip install pipenv
 	# Create virtual env with pipenv
-	pipenv --python $(pyenv which python.3.9.18)
+	# pipenv --python $(pyenv which python.3.9.18)
 
 else
 	echo "Correct python3 version installed. [Python3 $desired_version]"
