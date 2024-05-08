@@ -6,6 +6,7 @@ then
 	echo "[SETUP] Python3 not installed. Start installation..."
 	
 	# Install python using apt.
+	sudo apt update
 	sudo apt install python3==3.9
 
 	echo "[SETUP] Python3 installation done."
@@ -23,6 +24,7 @@ then
 	echo "[SETUP] pip3 not installed. Start installation..."
 
 	# Install pip3.
+	sudo apt update
 	sudo apt install python3-pip
 
 	echo "[SETUP] pip3 installation done."
@@ -36,7 +38,8 @@ if dpkg -s python3-venv &> /dev/null; then
 else
     echo "[SETUP] venv non installed. Start installation..."
     # Install venv. 
-    pip install --user virtualenv
+    sudo apt update
+    sudo apt install python3-venv
     echo "[SETUP] venv installation done."
 fi
 
@@ -51,6 +54,7 @@ virtualenv_name="genaienv"
 
 # Set correct directory where to store 'genaienv'.
 venv_path="$script_dir/$virtualenv_name"
+echo "[SETUP] 'genaienv' virtual environment path $venv_path"
 
 echo "[SETUP] Build 'genaienv' virtual environment."
 # Build virtual environment.
@@ -68,6 +72,7 @@ if [[ "$python_version" != *"$desired_version"* ]]; then
 	echo "[SETUP] Python $desired_version required. Start installation..."
 	
 	# Install curl.
+	sudo apt update
 	sudo apt install curl
 
     # Install pyenv.
