@@ -6,7 +6,7 @@ then
 	echo "Python3 not installed. Start installation..."
 	
 	# Install python using apt.
-	sudo apt install python3==3.9.18
+	sudo apt install python3==3.9
 
 	echo "Python3 installation done."
 else
@@ -18,11 +18,11 @@ python_version=$(python3 --version 2>&1)
 echo "Current python3 version: $python_version"
 
 # Correct python version.
-correct_python_version="3.9.18"
+correct_python_version="3.9"
 
-# Check if python version is 3.9.18
+# Check if python version is 3.9
 if [[ "$python_version" != *"$correct_python_version"* ]]; then
-	# Upgrade python to 3.9.18
+	# Upgrade python to 3.9
 	sudo apt install --only-upgrade python3="$correct_python_version"
 else
 	echo "Correct python3 version installed. [Python3 $correct_python_version]"
