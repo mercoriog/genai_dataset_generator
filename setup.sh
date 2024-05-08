@@ -14,7 +14,7 @@ else
 fi
 
 # Check python version.
-python_version=$(python --version 2>&1)
+python_version=$(python3 --version 2>&1)
 echo "Current python3 version: $python_version"
 
 # Correct python version.
