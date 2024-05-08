@@ -40,11 +40,25 @@ else
     echo "[SETUP] venv installation done."
 fi
 
-# Build virtual environment.
-python3 -m venv genaienv
+# Get setup script abspath.
+script_path=$(readlink -f "$0")
 
+# Get dirname from script abspath.
+script_dir=$(dirname "$script_path")
+
+# Set my virtual environment namer
+virtualenv_name="genaienv"
+
+# Set correct directory where to store 'genaienv'
+venv_path="$script_dir/$virtualenv_name"
+
+echo "[SETUP] Build 'genaienv' virtual environment."
+# Build virtual environment.
+python3 -m venv $venv_path
+
+echo "[SETUP] Activate 'genaienv' virtual environment."
 # Activate virtual environment.
-source genaienv/bin/activate
+source "$venv_path/bin/activate"
 
 # Correct python version.
 desired_version="3.9.18"
@@ -75,6 +89,10 @@ echo "[SETUP] Start downloading dependencies..."
 # Install dependencies.
 pip install -r requirements.txt
 echo "[SETUP] Dependencies installed"
+
+echo "[SETUP] Deactivate 'genaienv' virtual environment."
+# Deactivate virtual environment.
+deactivate
 
 echo "[SETUP] Done."
 sleep 10s
