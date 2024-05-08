@@ -17,15 +17,33 @@ fi
 python_version=$(python3 --version 2>&1)
 echo "Current python3 version: $python_version"
 
-# Correct python version.
-correct_python_version="3.9"
+python3 -m venv genaienv
 
-# Check if python version is 3.9
-if [[ "$python_version" != *"$correct_python_version"* ]]; then
-	# Upgrade python to 3.9
-	sudo apt install --only-upgrade python3="$correct_python_version"
+source genaienv/Scripts/activate
+
+# Correct python version.
+desired_version="3.9.18"
+
+# Check if python version is 3.9.18
+if [[ "$python_version" != *"$desired_version"* ]]; then
+	# Upgrade python to 3.9.18
+	sudo apt update
+	sudo apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
+	
+	# Download and compile
+	cd /tmp
+	wget https://www.python.org/ftp/python/$desired_version/Python-$desired_version.tgz
+	tar -xf Python-$desired_version.tgz
+	cd Python-$desired_version
+	./configure --enable-optimizations
+	make -j$(nproc)
+	sudo make altinstall
+
+	# Clean .tgz archive
+    cd ..
+    rm -rf Python-$desired_version Python-$desired_version.tgz
 else
-	echo "Correct python3 version installed. [Python3 $correct_python_version]"
+	echo "Correct python3 version installed. [Python3 $desired_version]"
 fi
 
 # Check if pip3 is installed.
@@ -40,10 +58,6 @@ then
 else
 	echo "pip3 found."
 fi
-
-python3 -m venv genaienv
-
-source genaienv/Scripts/activate
 
 pip install -r requirements.txt
 
