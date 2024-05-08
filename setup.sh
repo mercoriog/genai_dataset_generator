@@ -46,10 +46,10 @@ script_path=$(readlink -f "$0")
 # Get dirname from script abspath.
 script_dir=$(dirname "$script_path")
 
-# Set my virtual environment namer
+# Set my virtual environment name.
 virtualenv_name="genaienv"
 
-# Set correct directory where to store 'genaienv'
+# Set correct directory where to store 'genaienv'.
 venv_path="$script_dir/$virtualenv_name"
 
 echo "[SETUP] Build 'genaienv' virtual environment."
