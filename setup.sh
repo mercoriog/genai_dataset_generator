@@ -64,6 +64,14 @@ echo "[SETUP] Activate 'genaienv' virtual environment."
 # Activate virtual environment.
 source "$venv_path/bin/activate"
 
+# Check if virtual environment is activated successfully:
+if [[ $VIRTUAL_ENV != "" ]]; then
+    echo "[SETUP] Virtual environment activated."
+else
+    echo "[SETUP] Virtual environment NOT activated."
+    exit 1
+fi
+
 # Correct python version.
 desired_version="3.9.18"
 
