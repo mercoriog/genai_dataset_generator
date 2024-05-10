@@ -75,12 +75,26 @@ fi
 # Correct python version.
 desired_version="3.9.18"
 
-# Install Python 3.9 inside the virtual environment.
-echo "[SETUP] Install Python 3.9 inside 'genaienv' virtual environment."
-$venv_path/bin/python3.9 -m pip install --upgrade pip
+echo "[SETUP] Python $desired_version required. Start installation..."
+	
+# Install curl.
+sudo apt update
+sudo apt install curl
 
-# Install desired Python version in the virtual environment.
-$venv_path/bin/python3.9 -m pip install $desired_version
+echo "[SETUP] pyenv required. Start installation..."
+# Install pyenv.
+curl https://pyenv.run | bash
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+eval "$(pyenv virtualenv-init -)"
+
+# Install python desired version.
+pyenv install $desired_version
+pyenv local $desired_version
+
+echo "[SETUP] Python $desired_version installation done."
 
 # Check if desired Python version is installed inside the virtual environment.
 installed_python_version=$($venv_path/bin/python3.9 --version 2>&1)
@@ -93,7 +107,6 @@ fi
 echo "[SETUP] Start downloading dependencies..."
 $venv_path/bin/pip install -r requirements.txt
 echo "[SETUP] Dependencies installed"
-
 
 echo "[SETUP] Deactivate 'genaienv' virtual environment."
 # Deactivate virtual environment.
