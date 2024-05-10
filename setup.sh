@@ -75,37 +75,25 @@ fi
 # Correct python version.
 desired_version="3.9.18"
 
-# Check if python version is '3.9.18':
-if [[ "$python_version" != *"$desired_version"* ]]; then
-	echo "[SETUP] Python $desired_version required. Start installation..."
-	
-	# Install curl.
-	sudo apt update
-	sudo apt install curl
+# Install Python 3.9 inside the virtual environment.
+echo "[SETUP] Install Python 3.9 inside 'genaienv' virtual environment."
+$venv_path/bin/python3.9 -m pip install --upgrade pip
 
-	echo "[SETUP] pyenv required. Start installation..."
-    # Install pyenv.
-    curl https://pyenv.run | bash
-    export PYENV_ROOT="$HOME/.pyenv"
-    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
+# Install desired Python version in the virtual environment.
+$venv_path/bin/python3.9 -m pip install $desired_version
 
-    eval "$(pyenv virtualenv-init -)"
-
-    # Install python desired version.
-    pyenv install $desired_version
-    pyenv global $desired_version
-
-	echo "[SETUP] Python $desired_version installation done."
-
-else
-	echo "[SETUP] Correct python3 version installed. [Python3 $desired_version]"
+# Check if desired Python version is installed inside the virtual environment.
+installed_python_version=$($venv_path/bin/python3.9 --version 2>&1)
+if [[ "$installed_python_version" != *"$desired_version"* ]]; then
+    echo "[SETUP] Failed to install Python $desired_version inside 'genaienv'."
+    exit 1
 fi
 
+# Install dependencies inside the virtual environment.
 echo "[SETUP] Start downloading dependencies..."
-# Install dependencies.
-pip install -r requirements.txt
+$venv_path/bin/pip install -r requirements.txt
 echo "[SETUP] Dependencies installed"
+
 
 echo "[SETUP] Deactivate 'genaienv' virtual environment."
 # Deactivate virtual environment.
