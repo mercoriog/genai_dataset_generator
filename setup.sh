@@ -90,6 +90,8 @@ if [[ "$python_version" != *"$desired_version"* ]]; then
     [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
 
+    eval "$(pyenv virtualenv-init -)"
+
     # Install python desired version.
     pyenv install $desired_version
     pyenv global $desired_version
