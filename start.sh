@@ -13,8 +13,9 @@ virtualenv_name="genaienv"
 venv_path="$script_dir/$virtualenv_name"
 
 echo "[START] Activate 'genaienv' virtual environment."
+
 # Activate virtual environment.
-source "$venv_path/bin/activate"
+source "$venv_path/Scripts/activate"
 
 echo "[START] Start 'genai_dataset_generator.py'..."
 python3 $script_dir/src/main.py

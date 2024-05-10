@@ -4,7 +4,7 @@ python -m venv genaienv
 
 source genaienv/Scripts/activate
 
-pip install -r requirements.txt
+pip install -r old_requirements.txt
 
 echo "Done."
 

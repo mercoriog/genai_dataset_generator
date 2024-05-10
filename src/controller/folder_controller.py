@@ -1,7 +1,7 @@
 import os
 import shutil
 
-MAIN_FOLDER_NAME = "."
+MAIN_FOLDER_NAME = "genai_dataset_generator"
 LOCAL_FOLDER_NAME = "local"
 USER_FOLDER_NAME = "user"
 OUTPUT_FOLDER_NAME = "output"
@@ -11,19 +11,34 @@ AICAPTIONING_FOLDER_NAME = "aicaptioning"
 MANUAL_FILE_NAME = "Manual.txt"
 GITHUB_REPOSITORY_LINK = "https://github.com/mercoriog/genai_dataset_generator"
 MODEL_URL = r"https://drive.google.com/file/d/1jtMA62FBTn9X86gAl-dtTg81NckAk8A7/view?usp=sharing"
+ENV_URL = r""
+ENV_FOLDER_NAME = "genaienv"
 ZIP_MODEL_NAME = "BlipBaseModel.zip"
 
 def extractBasename(filename):
     path_to, basename = os.path.split(filename)
     return basename
 
+def getMainFolderPath():
+    current_path = os.getcwd()
+    basename = extractBasename(current_path)
+    
+    if basename == "src":
+        os.chdir("..")
+        current_path = os.getcwd()
+    
+    return current_path
+
 def getModelURL():
     # Return AI Model URL string.
     return MODEL_URL
 
 def getSourceFolderPath():    
+    # Get main folder name.
+    main_folder_path = getMainFolderPath()
+
     # Build 'src' folder path.
-    src_folder_path = os.path.join(os.getcwd(), MAIN_FOLDER_NAME, SOURCE_FOLDER_NAME)
+    src_folder_path = os.path.join(main_folder_path, SOURCE_FOLDER_NAME)
 
     # Return 'src' folder path.
     return src_folder_path
@@ -64,8 +79,11 @@ def getZIPModelPath():
     return zip_model_path
 
 def getLocalFolderPath():
+    # Get main folder name.
+    main_folder_path = getMainFolderPath()
+
     # Build 'local' folder path.
-    local_folder_path = os.path.join(os.getcwd(), MAIN_FOLDER_NAME, LOCAL_FOLDER_NAME)
+    local_folder_path = os.path.join(main_folder_path, LOCAL_FOLDER_NAME)
     
     # Check if 'local' folder exists:
     if os.path.exists(local_folder_path) == False:
@@ -122,8 +140,11 @@ def getOutputFolderPath():
     return output_folder_path
 
 def getManualFilePath():
+    # Get main folder name.
+    main_folder_path = getMainFolderPath()
+
     # Build manual file path.
-    manual_file_path = os.path.join(MAIN_FOLDER_NAME, MANUAL_FILE_NAME)
+    manual_file_path = os.path.join(main_folder_path, MANUAL_FILE_NAME)
 
     # Return manual file path.
     return manual_file_path
@@ -145,3 +166,16 @@ def initFolders():
 
     # This function returns True only if no Exception occurs.
     return True
+
+def getEnvUrl():
+    return ENV_URL
+
+def getEnvFolderPath():
+    # Get main folder name.
+    main_folder_path = getMainFolderPath()
+
+    # Build 'genainev' folder path.
+    genaienv_folder_path = os.path.join(main_folder_path, ENV_FOLDER_NAME)
+
+    # Return 'genaienv' folder path
+    return genaienv_folder_path

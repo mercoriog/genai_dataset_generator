@@ -1,0 +1,9 @@
+gdown==5.1.0
+gradio==4.23.0
+opencv-python==4.9.0.80
+pillow==10.2.0
+tensorflow
+torch==2.3.0
+torchaudio==2.3.0
+torchvision==0.18.0
+transformers==4.40.1
