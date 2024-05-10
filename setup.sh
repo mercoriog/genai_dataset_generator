@@ -105,7 +105,7 @@ fi
 
 # Install dependencies inside the virtual environment.
 echo "[SETUP] Start downloading dependencies..."
-$venv_path/bin/pip install -r requirements.txt
+pip install -r requirements.txt
 echo "[SETUP] Dependencies installed"
 
 echo "[SETUP] Deactivate 'genaienv' virtual environment."
