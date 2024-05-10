@@ -83,10 +83,12 @@ if [[ "$python_version" != *"$desired_version"* ]]; then
 	sudo apt update
 	sudo apt install curl
 
+	echo "[SETUP] pyenv required. Start installation..."
     # Install pyenv.
     curl https://pyenv.run | bash
-    export PATH="$HOME/.pyenv/bin:$PATH"
-    eval "$(pyenv init --path)"
+    export PYENV_ROOT="$HOME/.pyenv"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
 
     # Install python desired version.
     pyenv install $desired_version
