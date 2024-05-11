@@ -1,12 +1,12 @@
 from PIL import Image
 from transformers import BlipProcessor, BlipForConditionalGeneration
-from controller import folder_controller as foldc
+from repository import model
 
 def setup():
 	# This function load the pretrained Blip model and it's processor from model folder.
 	
 	# Get model folder path.
-	model_path = foldc.getModelFolderPath()
+	model_path = model.getModelFolderPath()
 
 	# Load model.
 	model = BlipForConditionalGeneration.from_pretrained(model_path)

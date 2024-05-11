@@ -1,5 +1,5 @@
 from aicaptioning import image_captioning as aicapt
-from controller import folder_controller as foldc
+from repository import output
 from pathlib import Path
 import os
 
@@ -22,7 +22,7 @@ def createTxtFile(filename, token, ai_generated_caption, every_caption):
     # This function returns the generated text file's path.
     
     # Get 'output' folder's path.
-    out_folder_path = foldc.getOutputFolderPath()
+    out_folder_path = output.getOutputFolderPath()
     
     # Build file.txt basename.
     txt_file_basename = f"{filename}.txt"

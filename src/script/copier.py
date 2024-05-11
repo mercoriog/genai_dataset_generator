@@ -1,4 +1,4 @@
-from controller import folder_controller as foldc
+from repository import user
 import shutil
 
 def copyFolder(folder):
@@ -11,7 +11,7 @@ def copyFolder(folder):
     # For each file in input folder:
     for file in folder:
         # Define new path for the current file using its basename. 
-        local_filename = foldc.buildUserFolderFile(file)
+        local_filename = user.buildUserFolderFile(file)
         
         # Create a copy of the current file and store it in 'local\user' folder.
         shutil.copy(file, local_filename)

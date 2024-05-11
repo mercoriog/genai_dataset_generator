@@ -1,4 +1,4 @@
-from controller import folder_controller as foldc
+from repository import manual
 import os
 
 def createManualFile():
@@ -6,7 +6,7 @@ def createManualFile():
     # and store it as input file path.
 
     # Get manual file path.
-    manual_file_path = foldc.getManualFilePath()
+    manual_file_path = manual.getManualFilePath()
 
     # Set an exception handler:
     try:
@@ -34,7 +34,7 @@ def createManualFile():
 
 def getManualFile():
     # Get manual file path.
-    manual_file_path = foldc.getManualFilePath()
+    manual_file_path = manual.getManualFilePath()
 
     # Check if manual file exists:
     if os.path.exists(manual_file_path) == False:

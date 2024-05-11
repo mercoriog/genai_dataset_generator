@@ -1,5 +1,6 @@
-from controller import folder_controller as foldc
+from repository import output
 import shutil
+import os 
 
 def findPadding(num):
     # This function returns the number of necessary digits in order to enumerate files, 
@@ -44,7 +45,7 @@ def renameImages(folder, token):
     count = 0
     
     # Get the output folder's path where to store renamed folder's files.
-    out_folder_path = foldc.getOutputFolderPath()
+    out_folder_path = output.getOutputFolderPath()
 
     # For each file in input folder's list:
     for file in folder:
@@ -54,8 +55,11 @@ def renameImages(folder, token):
         # Get padded string to go from 'filename.ext' to 'filename-00xx.ext'. 
         padded_str = getPaddedString(padding, count)
         
-        # Build the formatted filename with .png extension.
-        new_filename = f"{out_folder_path}\\{token}-{padded_str}.png"
+        # Build formatted filename with .png extension
+        new_basename = f"{token}-{padded_str}.png"
+
+        # Build the correct filename (basename + path).
+        new_filename = os.path.join(out_folder_path, new_basename)
         
         # Create a copy of current file reanamed as new formatted name.
         shutil.copy(file, new_filename)

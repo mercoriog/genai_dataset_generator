@@ -1,14 +1,14 @@
 from service import downloader as down
-from controller import folder_controller as foldc
+from repository import model
 import os
 
 def loadModel():
     # This function download the model from web and store it in Model folder.
     # Get path where to store the ZIP Model file.  
-    zip_model_path = foldc.getZIPModelPath()
+    zip_model_path = model.getZIPModelPath()
     
     # Get ZIP Model URL.
-    zip_model_URL = foldc.getModelURL()
+    zip_model_URL = model.getModelURL()
     
     # Download ZIP Model and unzip to get it ready to use.
     # Set 'delete_when_unzipped=True' param to delete ZIP file after unzip operation.
@@ -23,7 +23,7 @@ def checkModel():
     # Model is expected to be downloaded and stored in Model folder.
     
     # Get Model folder path.
-    model_folder_path = foldc.getModelFolderPath()
+    model_folder_path = model.getModelFolderPath()
 
     # List all Model folder file.
     model_folder_files = os.listdir(model_folder_path)
@@ -38,7 +38,7 @@ def checkModel():
 
 def initModel():
     # Get Model folder path.
-    model_folder_path = foldc.getModelFolderPath()
+    model_folder_path = model.getModelFolderPath()
     
     # Check if Model is loaded.
     model = checkModel()

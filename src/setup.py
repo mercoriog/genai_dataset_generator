@@ -1,10 +1,10 @@
 from service import downloader as down
-from controller import folder_controller as foldc
+from repository import environment as env
 import os
 
 def checkEnv():
 	# Get environment folder path.
-	env_folder = foldc.getEnvFolderPath()
+	env_folder = env.getEnvFolderPath()
 
 	# Check if environment folder exists
 	if os.path.exists(env_folder):
@@ -20,10 +20,10 @@ def setup():
 
 	if not env:
 		# Get environment .zip file url.	
-		env_url = foldc.getEnvUrl()
+		env_url = env.getEnvUrl()
 
 		# Get path where to store environment folder.
-		env_folder = foldc.getEnvFolderPath()
+		env_folder = env.getEnvFolderPath()
 
 		# Download and Unzip environment folder zipfile
 		# Delete after unzipping (setting 'delete_when_unzipped'=True)

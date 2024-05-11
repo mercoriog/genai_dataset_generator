@@ -1,5 +1,7 @@
+from repository import output
+from repository import local
 import shutil
-from controller import folder_controller as foldc
+import os
 
 def generateArchiveFile(from_folder, to_folder):
     # This function generates an archive file from <from_folder> path 
@@ -8,7 +10,7 @@ def generateArchiveFile(from_folder, to_folder):
     
     # Build the archive file's name:
     # starting from <to_folder>, add a new subfolder named 'dataset'. 
-    archive_filename = f"{to_folder}\\dataset"
+    archive_filename = os.path.join(to_folder, dataset)
     
     # Generate the archive file. 
     shutil.make_archive(archive_filename, 'zip', from_folder)
@@ -25,10 +27,10 @@ def archiveProcessedData():
     # The generated archive file will be stored in 'local' folder.
 
     # Get 'output' folder path.
-    output_folder_path = foldc.getOutputFolderPath()
+    output_folder_path = output.getOutputFolderPath()
 
     # Get 'local' folder path.
-    local_folder_path = foldc.getLocalFolderPath()
+    local_folder_path = local.getLocalFolderPath()
     
     # Build the archive file containing files from the output folder      
     archive_file_path = generateArchiveFile(output_folder_path, local_folder_path)
