@@ -1,4 +1,4 @@
-from repository import soure
+from repository import source
 import os
 
 AICAPTIONING_FOLDER_NAME = "aicaptioning"
