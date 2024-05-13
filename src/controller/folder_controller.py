@@ -3,6 +3,7 @@ import os
 import shutil
 
 def initFolders():
+    # This function ensure that 'local' folder is empty.
     # Set an exception handler:
     try:
         # Get the 'local' folder path.
@@ -15,6 +16,7 @@ def initFolders():
     except Exception as e: 
         # Print the exception.
         print("[ERROR] " + str(e))
+        # Return False if error occurs.
         return False
 
     # This function returns True only if no Exception occurs.

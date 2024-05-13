@@ -20,6 +20,7 @@ def loadEnv():
 
 
 def checkEnv():
+    # This function checks if environment is loaded.
     # Get environment folder path.
     env_folder_path = envlib.getEnvFolderPath()
 
@@ -35,6 +36,10 @@ def checkEnv():
     return True
 
 def initEnv():
+    # This function check if environment is loaded: 
+    # if not loaded, it download the .zip file from web,
+    # unzip it and stores the environment in correct folder.
+    
     # Check if env is loaded.
     env = checkEnv()
 

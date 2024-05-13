@@ -19,7 +19,10 @@ def getUserFolderPath():
     return user_folder_path
 
 def extractBasename(filename):
+    # This function split file's path in two parts.
     path_to, basename = os.path.split(filename)
+
+    # Return the 'name.ext' of the file.
     return basename
 
 def buildUserFolderFile(file_path):

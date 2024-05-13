@@ -3,7 +3,10 @@ import os
 import csv
 
 def extractBasename(filename):
+	# This function split file's path in two parts.
     path_to, basename = os.path.split(filename)
+
+    # Return the 'name.ext' of the file.
     return basename
 
 def getCSVFilePath():
@@ -13,6 +16,7 @@ def getCSVFilePath():
 	# Build .csv file path.
 	csv_file_path = os.path.join(output_folder_path, "datset.csv")
 
+	# Return .csv file path.
 	return csv_file_path
 
 def initCSVContent():
@@ -43,7 +47,8 @@ def loadText(textfile, data):
 	except Exception as e:
 		# Print the exception.
 		print("[ERROR] " + str(e))
-        # Error in open textfile. Use empty string as 'label'
+        
+        # Error in open textfile. Use empty string as 'label'.
 		data.append("")
 
 	# Return updated data.
@@ -117,6 +122,7 @@ def createCSV(content, filepath):
 	except Exception as e:
 		# Print the exception.
 		print("[ERROR] " + str(e))
+		
 		# Notify error.
 		return False
     
@@ -154,6 +160,7 @@ def createCSVFile(directory):
 	except Exception as e:
 		# Print the exception.
 		print("[ERROR] " + str(e))
+		
 		# Notify error.
 		return False
 

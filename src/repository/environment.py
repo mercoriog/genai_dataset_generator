@@ -6,6 +6,7 @@ ENV_FOLDER_NAME = "genaienv"
 ZIP_ENV_NAME = "genaienv.zip"
 
 def getEnvURL():
+    # Return environment zip file's URL. 
     return ENV_URL
 
 def getEnvFolderPath():

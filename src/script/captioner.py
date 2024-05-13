@@ -3,14 +3,8 @@ from repository import output
 from pathlib import Path
 import os
 
-'''
-def extractCaptionWithAI(image, processor, model):
-    # This function 
-    caption = aicapt.imageCaptioningFromFile(image, processor, model)
-    return caption
-'''
-
 def extractNameNoExt(filename):
+    # This function extract the exact name of the file (without extension).
     return Path(filename).stem
 
 def createTxtFile(filename, token, ai_generated_caption, every_caption):

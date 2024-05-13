@@ -35,5 +35,5 @@ def archiveProcessedData():
     # Build the archive file containing files from the output folder      
     archive_file_path = generateArchiveFile(output_folder_path, local_folder_path)
 
-    # Return the archive file path
+    # Return the archive file path.
     return archive_file_path

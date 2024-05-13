@@ -6,7 +6,6 @@ import os
 def initGUI():
     # Notify initialization.
     print("[PREP] Start GUI initialization...")
-    print("[PREP] current dir:" + os.getcwd())
 
     # Initialize AI Model.
     model = modc.initModel()

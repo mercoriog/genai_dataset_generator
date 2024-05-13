@@ -140,45 +140,61 @@ def genRequest(folder, height, width, token, label, use_ai, every_caption):
 # GUI Builder method:
 def buildGUI():
 	with gr.Blocks(title = "Dataset generator") as demo:
+		# Label that describe what this software do.
 		presentation = compgetPresentation()
+
+		# Input item to upload the user folder.
 		folder_uploader = compgetFolderUploader()
 
 		# [NEW] DYNAMIC SECTION:
 		with gr.Accordion(label = "Resize images", open = False):
 			# [NEW] HORIZONTAL LAYOUT:
 			with gr.Row():
+				# Input box for width dimension.
 				width_input = compgetWidthInput()
+				
+				# Input box for height dimension.
 				height_input = compgetHeightInput()
 			# [END] HORIZONTAL LAYOUT.		
 		# [END] DYNAMIC SECTION.
 
+		# Textbox to insert images' token. 
 		token_textbox = compgetTokenTextBox()
 
 		# [NEW] GROUP LAYOUT:
 		with gr.Group():
+			# Checkbox to allow or disable image labelling.
 			label_checkbox = compgetLabelCheckBox()
 
 			# [NEW] DYNAMIC SECTION:
 			with gr.Accordion(label = "Image Captioning.", open = False):
+				# Label to teach user how this section works.
 				labelling_label = compgetLabellingLabel()
 				
 				# [NEW] HORIZONTAL LAYOUT:
 				with gr.Row():
 					# [NEW] VERTICAL LAYOUT:
 					with gr.Column(scale = 1):
+						# Checkbox to allow or disable AI captioning.
 						aiCaptioning_checkbox = compgetAICaptioning()
 					# [END] VERTICAL LAYOUT
 
 					# [NEW] VERTICAL LAYOUT:
 					with gr.Column(scale = 2):
+						# Textbox for caption to set in every image.
 						customCaption_textbox = compgetCustomImageCaption()
 					# [END] VERTICAL LAYOUT.
 				# [END] HORIZONTAL LAYOUT.
 			# [END] DYNAMIC SECTION.		
 		# [END] GROUP LAYOUT.
 
+		# Button for generation.
 		generate_button = compgetGenerateButton()
+
+		# File item to upload when generation end.
 		datasetFile = compgetDatasetFile()
+
+		# Download button to click to get generated file.
 		download_button = compgetDownloadButton()
 
 		# Define event listener for generation.

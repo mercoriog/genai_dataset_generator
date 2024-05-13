@@ -21,12 +21,18 @@ def deleteFile(file):
         print(f"[ERROR] Deleting ZIP file failed. Message: ", e)
 
 def extractPathTo(filename):
+    # This function split file's path in two parts.
     path_to, basename = os.path.split(filename)
+
+    # Return path to file part.
     return path_to
 
 def getUnzipFolder(file_path):
-    path_to = extractPathTo(file_path)
-    return path_to
+    # Extract the 'path to' part from file path
+    unzip_to = extractPathTo(file_path)
+
+    # Return folder where to unzip the file.
+    return unzip_to
 
 def unzipFile(file, unzip_folder):
     # Notify unzip operation.
@@ -46,6 +52,8 @@ def unzipFile(file, unzip_folder):
     except Exception as e:
         # Notify error.
         print(f"[ERROR] Unzip failed. Message: ", e)
+
+        # Return False if any error occurs.
         return False
 
     # This function returns True if no error occurs.
@@ -68,6 +76,8 @@ def downloadFile(url, save_path):
     except Exception as e:
         # Notify error.
         print(f"[ERROR] Download failed. Message: ", e)
+        
+        # Return False if any error occurs.
         return False
 
     # This function returns True if no error occurs.
