@@ -1,7 +1,7 @@
 from controller import folder_controller as foldc
 import os
 
-ENV_URL = r""
+ENV_URL = r"https://drive.google.com/file/d/1GazpS6-wgh8lJzuZu6S20XrkgihelfUe/view?usp=sharing"
 ENV_FOLDER_NAME = "genaienv"
 
 def getEnvUrl():
