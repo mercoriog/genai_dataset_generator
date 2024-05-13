@@ -28,17 +28,22 @@ else
 	echo "[SETUP] pip3 found."
 fi
 
-# Install gdown library
-pip3 install gdown
+# Check if venv installed:
+if dpkg -s python3-venv &> /dev/null; then
+    echo "[SETUP] venv found."
+else
+    echo "[SETUP] venv non installed. Start installation..."
+    # Install venv. 
+    sudo apt update
+    sudo apt install python3-venv
+    echo "[SETUP] venv installation done."
+fi
 
-# Get setup.sh abspath.
-script_path=$(readlink -f "$0")
+python3 -m venv genaienv
 
-# Get dirname from script abspath.
-script_dir=$(dirname "$script_path")
+source genaienv/bin/activate
 
-# Start src/setup.py python script.
-python3 $script_dir/src/setup.py
+pip3 install -r requirements.txt
 
 echo "Done."
 
