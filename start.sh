@@ -21,6 +21,7 @@ echo "[START] Start 'genai_dataset_generator.py'..."
 python3 $script_dir/src/main.py
 
 echo "[START] Deactivate 'genaienv' virtual environment."
+
 # Deactivate virtual environment.
 deactivate
 
