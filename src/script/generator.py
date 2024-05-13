@@ -3,6 +3,7 @@ from script import renamer
 from script import resizer
 from script import captioner
 from script import archiver
+from script import tabular
 from script import preprocesser as prep
 from script import error_handler as hand
 
@@ -60,12 +61,10 @@ def generateDataset(folder, size, token, label, use_ai, every_caption):
         if label == True:
             # Merge <resize_folder> and <txt_folder> to get a list of files' path to group
             # in order to generate an archive file. 
-            processed_folder = resized_folder.extend(txt_folder)
-        else:
-            # Only files in resized folder are processed
-            processed_folder = resized_folder 
-
-        # Note that <processed_folder> is never used.
+            processed_folder = [resized_folder, txt_folder]
+            
+            # Note that <processed_folder> is never used.
+            csv_file = tabular.createCSVFile(processed_folder)
 
         # Create an archive file of processed data
         archive_file = archiver.archiveProcessedData()

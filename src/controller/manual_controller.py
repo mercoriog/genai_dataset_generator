@@ -1,4 +1,4 @@
-from repository import manual
+from repository import manual as manuallib
 import os
 
 def createManualFile():
@@ -6,7 +6,7 @@ def createManualFile():
     # and store it as input file path.
 
     # Get manual file path.
-    manual_file_path = manual.getManualFilePath()
+    manual_file_path = manuallib.getManualFilePath()
 
     # Set an exception handler:
     try:
@@ -34,12 +34,12 @@ def createManualFile():
 
 def getManualFile():
     # Get manual file path.
-    manual_file_path = manual.getManualFilePath()
+    manual_file_path = manuallib.getManualFilePath()
 
     # Check if manual file exists:
     if os.path.exists(manual_file_path) == False:
         # Create manual file:
-        manual = createManualFile()
+        manual_file = createManualFile()
 
     # Return manual file path.
     return manual_file_path

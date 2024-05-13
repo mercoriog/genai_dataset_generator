@@ -1,11 +1,11 @@
-from repository import source
+from repository import main
 import os
 
 LOCAL_FOLDER_NAME = "local"
 
 def getLocalFolderPath():
     # Get main folder name.
-    main_folder_path = source.getMainFolderPath()
+    main_folder_path = main.getMainFolderPath()
 
     # Build 'local' folder path.
     local_folder_path = os.path.join(main_folder_path, LOCAL_FOLDER_NAME)

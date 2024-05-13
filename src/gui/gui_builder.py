@@ -32,9 +32,9 @@ def compgetTokenTextBox():
 
 def compgetLabelCheckBox():
 	label_checkbox = gr.Checkbox(
-		value = False,
+		value = True,
 		label = "Enable Labelling",
-		info = "Set to generate a text file for each dataset image with token label. Check 'Image Captioning' section for more.",
+		info = "Turn on to generate a text file for each dataset image with token label. Check 'Image Captioning' section for more.\nTurn off to deactivate.",
 		show_label = True,
 		interactive = True
 	)
@@ -88,7 +88,7 @@ def compgetCustomImageCaption():
 def compgetAICaptioning():
 	aiCaptioning_checkbox = gr.Checkbox(
 		value = False,
-		label = "Use AI for Image Captioning",
+		label = "Use AI for feature extraction",
 		info = "Activate to use AI Model to automate image captioning.",
 		show_label = True,
 		interactive = True

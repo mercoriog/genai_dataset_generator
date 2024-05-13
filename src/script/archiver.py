@@ -10,7 +10,7 @@ def generateArchiveFile(from_folder, to_folder):
     
     # Build the archive file's name:
     # starting from <to_folder>, add a new subfolder named 'dataset'. 
-    archive_filename = os.path.join(to_folder, dataset)
+    archive_filename = os.path.join(to_folder, "dataset")
     
     # Generate the archive file. 
     shutil.make_archive(archive_filename, 'zip', from_folder)
