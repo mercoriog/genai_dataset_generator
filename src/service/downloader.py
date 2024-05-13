@@ -20,7 +20,15 @@ def deleteFile(file):
         # Notify error.
         print(f"[ERROR] Deleting ZIP file failed. Message: ", e)
 
-def unzipFile(file):
+def extractPathTo(filename):
+    path_to, basename = os.path.split(filename)
+    return path_to
+
+def getUnzipFolder(file_path):
+    path_to = extractPathTo(file_path)
+    return path_to
+
+def unzipFile(file, unzip_folder):
     # Notify unzip operation.
     print(f"[UNZIP] Unzip file: {file}")
     
@@ -29,7 +37,7 @@ def unzipFile(file):
         # Extracting zip file using the zipfile package.
         with ZipFile(file) as z:
             # Extract ZIP file contents in the same directory.
-            z.extractall(os.path.split(file)[0])
+            z.extractall(unzip_folder)
 
         # Notify correct result.
         print("[UNZIP] File unzipped with no errors.")
@@ -74,8 +82,11 @@ def downloadAndUnzip(url, save_path, delete_when_unzipped):
         # Return False if any error occurs.
         return False
     
+    # Get folder path where to unzip file.
+    unzip_folder = getUnzipFolder(save_path)
+
     # Unzip downloaded file.
-    unzipped = unzipFile(save_path)
+    unzipped = unzipFile(save_path, unzip_folder)
 
     # Check if file is unzipped with no errors:
     if not unzipped:

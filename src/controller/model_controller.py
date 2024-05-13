@@ -30,16 +30,13 @@ def checkModel():
 
     # If Model folder is empty:
     if len(model_folder_files) == 0:
-        # Return False
+        # Return False.
         return False
 
     # This function returns True if Model is not empty.
     return True
 
 def initModel():
-    # Get Model folder path.
-    model_folder_path = modellib.getModelFolderPath()
-    
     # Check if Model is loaded.
     model = checkModel()
 
