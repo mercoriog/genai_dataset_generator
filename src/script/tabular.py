@@ -14,7 +14,7 @@ def getCSVFilePath():
 	output_folder_path = output.getOutputFolderPath()
 
 	# Build .csv file path.
-	csv_file_path = os.path.join(output_folder_path, "datset.csv")
+	csv_file_path = os.path.join(output_folder_path, "dataset.csv")
 
 	# Return .csv file path.
 	return csv_file_path
