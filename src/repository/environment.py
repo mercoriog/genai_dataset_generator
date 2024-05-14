@@ -1,7 +1,7 @@
 from repository import main
 import os
 
-ENV_URL = r"https://drive.google.com/file/d/1GazpS6-wgh8lJzuZu6S20XrkgihelfUe/view?usp=sharing"
+ENV_URL = r"https://drive.google.com/file/d/1zGqsJtV9Zyrx_Hicn3ocSmRD7n7BxOnd/view?usp=drive_link"
 ENV_FOLDER_NAME = "genaienv"
 ZIP_ENV_NAME = "genaienv.zip"
 
