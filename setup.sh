@@ -1,13 +1,16 @@
 #!/bin/bash
 
 # Check if python is installed:
-if ! command -v python3 &> /dev/null
+if ! command -v python3.12 &> /dev/null
 then
 	echo "[SETUP] Python3 not installed. Start installation..."
 	
 	# Install python using apt.
 	sudo apt update
-	sudo apt install python3
+	sudo apt upgrade
+	sudo add-apt-repository ppa:deadsnakes/ppa -y
+	sudo apt install python3.12-{tk,dev,dbg,venv,gdbm,distutils}
+	sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
 
 	echo "[SETUP] Python3 installation done."
 else
