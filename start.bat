@@ -14,7 +14,7 @@ set "venv_path=%script_dir%\%virtualenv_name%"
 echo [START] Activate 'genaienv' virtual environment.
 
 REM Activate virtual environment.
-source "%venv_path%\Scripts\activate"
+call "%venv_path%\Scripts\activate.bat"
 
 echo [START] Start 'genai_dataset_generator.py'...
 python %script_dir%\src\main.py
