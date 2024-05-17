@@ -9,7 +9,7 @@ then
 	sudo apt update
 	sudo apt upgrade
 	sudo add-apt-repository ppa:deadsnakes/ppa -y
-	sudo apt install python3.12-{tk,dev,dbg,venv,gdbm,distutils} -y
+	sudo apt install python3.12-{tk,dev,dbg,venv,gdbm,distutils}
 	sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
 
 	echo "[SETUP] Python3 installation done."
@@ -24,8 +24,7 @@ then
 
 	# Install pip3.
 	sudo apt update
-	sudo apt install python3-pip -y
-
+	sudo apt install python3-pip
 	echo "[SETUP] pip3 installation done."
 else
 	echo "[SETUP] pip3 found."
@@ -38,19 +37,19 @@ else
     echo "[SETUP] venv non installed. Start installation..."
     # Install venv. 
     sudo apt update
-    sudo apt install python3-venv -y
+    sudo apt install python3-venv
     echo "[SETUP] venv installation done."
 fi
 
 # Set env name.
-env_name = "genaienv"
+env_name="genaienv"
 
 # Build virtual environment.
 python3 -m venv ${env_name}
 
 # Activate venv and launch setup.
-${env_name}/bin/pip3 install -r requirements.txt -y
+${env_name}/bin/pip3 install -r requirements.txt
 
-echo "Done."
+echo "[SETUP] Done."
 
 sleep 5s
