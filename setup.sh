@@ -5,11 +5,11 @@ if ! command -v python3.12 &> /dev/null
 then
 	echo "[SETUP] Python3 not installed. Start installation..."
 	
-	# Install python using apt.
+	# Install correct python version using apt.
 	sudo apt update
 	sudo apt upgrade
 	sudo add-apt-repository ppa:deadsnakes/ppa -y
-	sudo apt install python3.12-{tk,dev,dbg,venv,gdbm,distutils}
+	sudo apt install python3.12-{tk,dev,dbg,venv,gdbm,distutils} -y
 	sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
 
 	echo "[SETUP] Python3 installation done."
@@ -24,7 +24,7 @@ then
 
 	# Install pip3.
 	sudo apt update
-	sudo apt install python3-pip
+	sudo apt install python3-pip -y
 
 	echo "[SETUP] pip3 installation done."
 else
@@ -38,15 +38,18 @@ else
     echo "[SETUP] venv non installed. Start installation..."
     # Install venv. 
     sudo apt update
-    sudo apt install python3-venv
+    sudo apt install python3-venv -y
     echo "[SETUP] venv installation done."
 fi
 
-python3 -m venv genaienv
+# Set env name.
+env_name = "genaienv"
 
-source genaienv/bin/activate
+# Build virtual environment.
+python3 -m venv ${env_name}
 
-pip3 install -r requirements.txt
+# Activate venv and launch setup.
+${env_name}/bin/pip3 install -r requirements.txt -y
 
 echo "Done."
 

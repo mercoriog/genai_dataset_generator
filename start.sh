@@ -6,16 +6,11 @@ script_path=$(readlink -f "$0")
 # Get dirname from script abspath.
 script_dir=$(dirname "$script_path")
 
-echo "[START] Activate 'genaienv' virtual environment."
+# Set virtual environment name.
+env_name = "genaienv"
 
-# Activate virtual environment.
-source genaienv/bin/activate
+# Get env name.
+env_path = "${script_dir}/${env_name}"
 
 echo "[START] Start 'genai_dataset_generator.py'..."
-python3 $script_dir/src/main.py
-
-echo "[START] Deactivate 'genaienv' virtual environment."
-
-# Deactivate virtual environment.
-deactivate
-
+${env_path}/bin/python3 $script_dir/src/main.py
