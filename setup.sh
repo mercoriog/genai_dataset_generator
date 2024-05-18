@@ -42,7 +42,7 @@ else
 fi
 
 # Set env name.
-env_name="genaienv"
+env_name="env"
 
 # Build virtual environment.
 python3 -m venv ${env_name}
