@@ -13,4 +13,4 @@ env_name="env"
 env_path="${script_dir}/${env_name}"
 
 echo "[START] Start 'genai_dataset_generator.py'..."
-${env_path}/Scripts/python3 $script_dir/src/main.py
+${env_path}/bin/python3 $script_dir/src/main.py
