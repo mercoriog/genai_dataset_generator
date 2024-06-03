@@ -2,7 +2,7 @@ from repository import aicaptioning as aicapt
 import os
 
 MODEL_FOLDER_NAME = "base_model"
-MODEL_URL = r"https://drive.google.com/file/d/1jtMA62FBTn9X86gAl-dtTg81NckAk8A7/view?usp=sharing"
+MODEL_URL = r"https://drive.google.com/file/d/1Kg4Iz5WN3pLKYl15yCqEHAIi4xVpVxaR/view?usp=sharing"
 ZIP_MODEL_NAME = "BlipBaseModel.zip"
 
 def getModelURL():
